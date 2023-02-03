@@ -1,0 +1,102 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <style>
+        .th,
+        td {
+            font-size: 1rem;
+        }
+
+        .th {
+            font-size: 0.7rem;
+            word-wrap: break-word
+        }
+
+        @media only screen and (max-width: 1199px) {
+            th {
+                padding: 4px 7px;
+            }
+        }
+
+        .lol {
+            padding: 1em;
+        }
+
+        td {
+            border: 1px solid;
+            color: #2f4cdd;
+            padding: 5px;
+            font-weight: bolder;
+        }
+
+        .category {
+            font-size: 1em;
+            background-color: #2f4cdd;
+            color: aliceblue;
+            border: 0;
+        }
+
+        .name {
+            word-wrap: break-word;
+            -ms-word-break: break-all;
+            word-break: break-all;
+            /* Non standard for webkit */
+            word-break: break-word;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
+        }
+
+        body {
+            font-family: 'Poppins';
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-fostrap">
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+        <div class="nav-bg-fostrap">
+            <div class="navbar-fostrap"> <span></span> <span></span> <span></span> </div>
+            <a href="" class="title-mobile">Logo</a>
+        </div>
+    </nav>
+    <div class="content-wrap">
+        <div class="categories">
+        </div>
+        <div class="order-list">
+            <h3 class="lol"> Orders </h3>
+            <div class="table">
+                <table id="example5" class="display  no-footer" role="grid" aria-describedby="example5_info">
+                    <thead>
+                        <tr role="row">
+                            <th class="th"> NAME </th>
+                            <th class="th"> QUANTITY </th>
+                            <th class="th"> ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
