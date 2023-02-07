@@ -1,4 +1,4 @@
-var socket=io('http://localhost:8000/menu');
+var socket=io('https://waiter-app-5a9c8.web.app//menu');
 var socket = io();
 
 
@@ -23,7 +23,7 @@ const chinese=[]
 
 
 // const appdata=JSON.parse(localStorage.getItem('kot')) || []
-const baseUrl1='http://localhost:8000/send'
+const baseUrl1='https://waiter-app-5a9c8.web.app//send'
 getinfos()
 async function getinfos() {
   const res = await fetch(baseUrl1,
@@ -369,11 +369,10 @@ navcart.innerHTML=basket.map((v)=>v.items).reduce((x,y)=>x+y,0)
 
 calc()
 
-const baseUrl='http://localhost:8000/info'
-setInterval(() => {
+const baseUrl='https://waiter-app-5a9c8.web.app/info'
     getinfo()
     
-}, 1000);
+
 async function getinfo() {
   const res = await fetch(baseUrl,
     {

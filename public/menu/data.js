@@ -692,7 +692,7 @@ const chinese=[]
 
 
 // const appdata=JSON.parse(localStorage.getItem('kot')) || []
-const baseUrl1='http://localhost:8000/send'
+const baseUrl1='https://waiter-app-5a9c8.web.app/send'
 
 async function getinfos() {
   const res = await fetch(baseUrl1,

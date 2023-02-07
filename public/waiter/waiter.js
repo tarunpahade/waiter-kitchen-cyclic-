@@ -1,7 +1,7 @@
 
 
 const rders=document.querySelector('.orders')
-const baseUrl='http://localhost:8000/info'
+const baseUrl='https://waiter-app-5a9c8.web.app/info'
 
   getinfo()
   
@@ -53,7 +53,7 @@ table.innerHTML='Table: '+x.table
         //Log object to console again.
         console.log("After update: ", d[objIndex])
         console.log(x)
-  const baseUrl='http://localhost:8000/waiter'
+  const baseUrl='https://waiter-app-5a9c8.web.app/waiter'
         post(x,baseUrl)
        location.reload()
        })
@@ -121,7 +121,7 @@ document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
   
     })
 
-    var socket=io('http://localhost:8000/waiter');
+    var socket=io('https://waiter-app-5a9c8.web.app/waiter');
     var socket = io();
 
     socket.on('orderReady', data=>{

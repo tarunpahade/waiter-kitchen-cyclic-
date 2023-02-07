@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(express.json())
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(bodyParser.urlencoded({extended:false}))
-mongoose.connect('mongodb://0.0.0.0:27017/orderedFood',{ useNewUrlParser: true, useUnifiedTopology: true }).then(()=>{
+mongoose.connect('mongodb://tarunpahade:test123@ac-ad8joto-shard-00-00.byx71hn.mongodb.net:27017,ac-ad8joto-shard-00-01.byx71hn.mongodb.net:27017,ac-ad8joto-shard-00-02.byx71hn.mongodb.net:27017/?ssl=true&replicaSet=atlas-wy4ihy-shard-0&authSource=admin&retryWrites=true&w=majority',{ useNewUrlParser: true, useUnifiedTopology: true }).then(()=>{
   console.log('connected');
 });
 mongoose.set("strictQuery", false);
@@ -523,9 +523,7 @@ res.redirect('/kitchen2')
   })
 
 
-  // app.listen('8000',()=>{
-  //   console.log('server up and running')
-  // })
+
 
 
 //socket io

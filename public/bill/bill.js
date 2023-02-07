@@ -1,4 +1,4 @@
-var socket=io('http://localhost:8000/kot&bill');
+var socket=io('https://waiter-app-5a9c8.web.app/kot&bill');
 var socket = io();
 
 
@@ -42,7 +42,7 @@ function none(){
 
 
 
-const baseUrl='http://localhost:8000/info'
+const baseUrl='https://waiter-app-5a9c8.web.app/info'
 
 async function getinfo() {
   const res = await fetch(baseUrl,
@@ -76,7 +76,7 @@ document.querySelector('.torder').style.display='block'
 const kota=document.createElement('button')
 kota.innerHTML='Print Kot'
 kota.addEventListener('click',()=>{
-  const baseUrl='http://localhost:8000/info'
+  const baseUrl='https://waiter-app-5a9c8.web.app/info'
 getinfo()
 async function getinfo() {
   const res = await fetch(baseUrl,
@@ -256,7 +256,7 @@ number.setAttribute('id', 'PhoneNumber')
 const remove= document.createElement('button') 
 remove.innerHTML='remove'
 remove.addEventListener('click',()=>{
-  post(j,'http://localhost:8000/delete')
+  post(j,'https://waiter-app-5a9c8.web.app/delete')
 })
 const buttondiv=document.createElement('div')
 buttondiv.classList.add('flex')
@@ -298,7 +298,7 @@ number.setAttribute('id', 'PhoneNumber')
 const remove= document.createElement('button') 
 remove.innerHTML='REMOVE'
 remove.addEventListener('click',()=>{
-  post(j,'http://localhost:8000/delete')
+  post(j,'https://waiter-app-5a9c8.web.app/delete')
 })
 const buttondiv=document.createElement('div')
 buttondiv.classList.add('flex')
@@ -430,14 +430,14 @@ j.map((Q)=>{
 
 
 //send info to backend
- post(search9,'http://localhost:8000/delete')
+ post(search9,'https://waiter-app-5a9c8.web.app/delete')
 })
 })
 const kota=document.createElement('button')
 kota.innerHTML='Print Kot'
 kota.addEventListener('click',(e)=>{
   document.querySelector('.generateBill').style.display='none'
-  const baseUrl='http://localhost:8000/info'
+  const baseUrl='https://waiter-app-5a9c8.web.app/info'
 getinfo()
 async function getinfo() {
   const res = await fetch(baseUrl,
@@ -542,7 +542,7 @@ zoo.push(xc)
 
 
    
-    post(f,'http://localhost:8000/update')
+    post(f,'https://waiter-app-5a9c8.web.app/update')
 
   
 
@@ -863,13 +863,13 @@ console.log(food);
      }
      none()
    
-const baseUrll='http://localhost:8000/bill';
+const baseUrll='https://waiter-app-5a9c8.web.app/bill';
 post(billData,baseUrll)    
 console.log(billData);  
-const baseUrl='http://localhost:8000/delete'
+const baseUrl='https://waiter-app-5a9c8.web.app/delete'
 console.log(search9);
 post(search9,baseUrl)
-const baseUr='http://localhost:8000/number'
+const baseUr='https://waiter-app-5a9c8.web.app/number'
 
 post(msgdata,baseUr)
 })   

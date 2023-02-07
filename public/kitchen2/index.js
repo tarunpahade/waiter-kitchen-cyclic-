@@ -6,8 +6,8 @@ document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
 
 
 
-const baseUrl='http://localhost:8000/info'
-const baseUrl2='http://localhost:8000/send'
+const baseUrl='https://waiter-app-5a9c8.web.app/info'
+const baseUrl2='https://waiter-app-5a9c8.web.app/send'
 const z=[]
 
 const orderstest=[]
@@ -189,7 +189,7 @@ console.log(a)
 const x=event.target.id +' is ready to be searved'
 socket.emit('ready', x )
 
-const baseUrl='http://localhost:8000/updateKitchen'
+const baseUrl='https://waiter-app-5a9c8.web.app/updateKitchen'
 post(a,baseUrl)
 
 }
@@ -281,7 +281,7 @@ async   function post(data,baseUrl){
   
     }
   
-    var socket=io('http://localhost:8000/kitchen2');
+    var socket=io('https://waiter-app-5a9c8.web.app/kitchen2');
     var socket = io();
 
     socket.on('message', data=>{
