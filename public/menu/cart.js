@@ -1,5 +1,5 @@
 var socket = io();
-var socket=io('https://waiter-app-5a9c8.web.app/menu');
+var socket=io('/menu');
 
 
 
@@ -18,7 +18,7 @@ const chinese=[]
 
 
 // const appdata=JSON.parse(localStorage.getItem('kot')) || []
-const baseUrl1='https://waiter-app-5a9c8.web.app/send'
+const baseUrl1='/send'
 
 async function getinfos() {
   const res = await fetch(baseUrl1,
@@ -267,7 +267,7 @@ function orderOnClick(){
   
   socket.emit('menu','You have a new order' );
   
-  const baseUrl='https://waiter-app-5a9c8.web.app/';
+  const baseUrl='/';
   //send info to backend
   async function getInfo(){
   
@@ -322,7 +322,7 @@ function orderOnClick(){
 
   //next step
 //make another page for customer after they checkout
-const baseUrl='https://waiter-app-5a9c8.web.app/info'
+const baseUrl='/info'
 setInterval(() => {
     getinfo()
     

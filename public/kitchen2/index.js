@@ -6,8 +6,8 @@ document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
 
 
 
-const baseUrl='https://waiter-app-5a9c8.web.app/info'
-const baseUrl2='https://waiter-app-5a9c8.web.app/send'
+const baseUrl='/info'
+const baseUrl2='/send'
 const z=[]
 
 const orderstest=[]
@@ -43,7 +43,7 @@ const data2=await res2.json()
 
 
 data.map((y)=>{
-
+console.log(y)
 
   if(y.status==='pending'){
 
@@ -186,12 +186,13 @@ d[objIndex].status = "cooked"
 //Log object to console again.
 console.log("After update: ", d[objIndex])
 console.log(a)
+console.log(event.target.id)
 const x=event.target.id +' is ready to be searved'
 socket.emit('ready', x )
 
-const baseUrl='https://waiter-app-5a9c8.web.app/updateKitchen'
+const baseUrl='/updateKitchen'
 post(a,baseUrl)
-
+location.reload()
 }
 })
 // location.reload()
@@ -281,7 +282,7 @@ async   function post(data,baseUrl){
   
     }
   
-    var socket=io('https://waiter-app-5a9c8.web.app/kitchen2');
+    var socket=io('/kitchen2');
     var socket = io();
 
     socket.on('message', data=>{

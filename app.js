@@ -404,15 +404,15 @@ app.get('/bill',(req,res)=>{
   const authToken = 'd3e2910aff173ee94bea532d24abab4a'; 
 
   const accountSid = 'ACbf2608b126a238d429463d915859023d'; 
-const accountSid2='AC823e61c41b739dbc0ebaad22394a4bd2';
-const authToken2='df3a2401c6f0a2babb750d59374cc48d'
+const accountSid2='ACbf2608b126a238d429463d915859023d';
+const authToken2='3d178128d53f73e69e4aa2c99b725e8f'
 const client = require('twilio')(accountSid2, authToken2); 
 async function sendSMSTwilo(text,to) {
 client.messages 
   .create({ 
      body: text,  
-     messagingServiceSid: 'MGa8b2effe9f0e8077755f9095acf02aed', 
-     from:'+16412176910',     
+     messagingServiceSid: 'MG5b44a6c5d07e45371925e9b63ac0501d', 
+     from:'+13396751233',     
      to: to 
    }) 
   .then(message => console.log(message.sid+'messege sent successfully')).catch((err)=>console.log(err)) 
@@ -500,7 +500,7 @@ console.log(pp);
       usersinfo.push(user)
 console.log(usersinfo);    
 if(usersinfo[0].position==='Waiter'){
-   res.redirect('./bill/bill.html')  
+   res.redirect('/bill/bill.html')  
 
 }  
 else if(usersinfo[0].position==='Chef')
@@ -527,7 +527,7 @@ res.redirect('/kitchen2')
 
 
 //socket io
-const server=app.listen(8000)
+const server=app.listen(5000)
 const io = require("socket.io")(server);
 
 
