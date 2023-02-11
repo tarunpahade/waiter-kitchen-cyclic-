@@ -8,7 +8,7 @@ const flash=require('express-flash')
 const session=require('express-session')
 const usersinfo=[]
 var app = express();
-
+const functions =require("firebase-functions")
 
 app.use(flash())
 // app.use(session({
@@ -404,15 +404,15 @@ app.get('/bill',(req,res)=>{
   const authToken = 'd3e2910aff173ee94bea532d24abab4a'; 
 
   const accountSid = 'ACbf2608b126a238d429463d915859023d'; 
-const accountSid2='ACbf2608b126a238d429463d915859023d';
-const authToken2='3d178128d53f73e69e4aa2c99b725e8f'
+const accountSid2='AC823e61c41b739dbc0ebaad22394a4bd2';
+const authToken2='df3a2401c6f0a2babb750d59374cc48d'
 const client = require('twilio')(accountSid2, authToken2); 
 async function sendSMSTwilo(text,to) {
 client.messages 
   .create({ 
      body: text,  
-     messagingServiceSid: 'MG5b44a6c5d07e45371925e9b63ac0501d', 
-     from:'+13396751233',     
+     messagingServiceSid: 'MGa8b2effe9f0e8077755f9095acf02aed', 
+     from:'+16412176910',     
      to: to 
    }) 
   .then(message => console.log(message.sid+'messege sent successfully')).catch((err)=>console.log(err)) 
@@ -525,11 +525,9 @@ res.redirect('/kitchen2')
 
 
 
-  const port = process.env.PORT || 8080;
 
 //socket io
-const server=app.listen(port)
-
+const server=app.listen(8000)
 const io = require("socket.io")(server);
 
 
@@ -566,5 +564,5 @@ client.messages
       .done();
 
       }
-
+exports.api= functions.https.onRequest(app)
 //O0ouB-9WXjzcaFIYs48e0hjvezalKxOgxGsebpi4

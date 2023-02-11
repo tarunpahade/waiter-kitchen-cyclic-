@@ -35,7 +35,7 @@ async function getinfos() {
   
 
     const data=await res.json()
-console.log(data)
+
 
 data.map((x)=>{
     
@@ -304,7 +304,7 @@ lala.innerHTML= food.map((x)=>{
 
   }
 let basket=JSON.parse(localStorage.getItem("data")) || []
-console.log(basket)
+
 
 let increment =(id)=>{
 console.log(id);
@@ -367,7 +367,7 @@ const navcart= document.getElementById('cartproducts')
 navcart.innerHTML=basket.map((v)=>v.items).reduce((x,y)=>x+y,0)
 }
 
-// calc()
+calc()
 
 const baseUrl='/info'
     getinfo()

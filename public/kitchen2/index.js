@@ -43,7 +43,7 @@ const data2=await res2.json()
 
 
 data.map((y)=>{
-console.log(y)
+
 
   if(y.status==='pending'){
 
@@ -186,16 +186,15 @@ d[objIndex].status = "cooked"
 //Log object to console again.
 console.log("After update: ", d[objIndex])
 console.log(a)
-console.log(event.target.id)
 const x=event.target.id +' is ready to be searved'
 socket.emit('ready', x )
 
 const baseUrl='/updateKitchen'
 post(a,baseUrl)
-location.reload()
+
 }
 })
-// location.reload()
+location.reload()
 }
 
 
