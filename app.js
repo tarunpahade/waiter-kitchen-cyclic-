@@ -527,7 +527,7 @@ res.redirect('/kitchen2')
   const port = process.env.PORT || 8080;
 
 //socket io
-const server=app.listen(9000)
+const server=app.listen(port)
 
 const io = require("socket.io")(server);
 
