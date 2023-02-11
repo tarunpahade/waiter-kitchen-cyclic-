@@ -384,15 +384,31 @@ async function getinfo() {
 
     const data=await res.json()
 
-const hh=data.filter((c)=>c.status==='cooked') || []
-console.log(hh);
-document.querySelector('.waiter').innerHTML=hh.length
-if(hh.length>0){
-console.log(hh.length);
+    const yo=[]
+    data.map((x)=>{
+    
+      x.orderedFood.map((z)=>{
+        if(z.status==='cooked'){
+          console.log(z);
+        yo.push(z)
+        
+        }})})
+    
+    
+    
+    console.log(yo);
+    document.querySelector('.waiter').innerHTML=yo.length
+    if(yo.length>0){
+    console.log(yo.length);
+    
+console.log(yo);
+document.querySelector('.waiter').innerHTML=yo.length
+if(yo.length>0){
+console.log(yo.length);
 }
 }
 
 document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
     document.querySelector('.nav-fostrap').classList.toggle('visible')
     
-      })
+      })}

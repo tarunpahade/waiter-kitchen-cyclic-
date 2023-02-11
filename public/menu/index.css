@@ -247,6 +247,23 @@ h4{
     overflow-x: hidden;
     padding-left: 30px;
 }
+@media only screen and (max-width:340px) {
+    .lala {
+    padding-left: 0;
+    padding: 0;
+
+    }
+    h3{
+        font-size: 16px;
+    }
+    body .card .photo img {
+        max-width: 110px;
+        max-height: 110px;
+        min-width: 110px;
+    min-height: 110px;
+
+    }
+}
 
 
 span{

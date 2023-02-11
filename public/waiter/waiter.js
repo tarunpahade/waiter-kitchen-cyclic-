@@ -125,8 +125,9 @@ document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
     var socket = io();
 
     socket.on('orderReady', data=>{
+      location.reload()  
       Notification.requestPermission().then(perm =>{
-          
+    
           if(perm==='granted'){
               const notification = new Notification("Example Notification",{
                   body:data,
@@ -139,6 +140,7 @@ document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
           } else{
   
           }
+          
       })
   
    

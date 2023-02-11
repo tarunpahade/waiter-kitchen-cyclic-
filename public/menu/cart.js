@@ -1,5 +1,4 @@
-var socket = io();
-var socket=io('/menu');
+
 
 
 
@@ -202,8 +201,9 @@ console.log(special);
             return items * search.price;
           })
           .reduce((x, y) => x + y, 0);
-    
-        label.innerHTML = `
+    const username=JSON.parse(localStorage.getItem("user"))
+    console.log(username[0].username);    
+    label.innerHTML = `
         <h2>Total Bill : ₹ ${amount}</h2>
         <h2>Total Orders : ${basket.length}</h2>
        
@@ -212,7 +212,7 @@ console.log(special);
      
     
    
-        <input type='text' name='name' class='customerName' id='customerName' placeholder='Enter Your Name' req>
+        <input type='text' name='name' class='customerName' id='customerName' value='${username[0].username}' placeholder='Enter Your Name'  readonly>
         <input type='text' name="table" class='customerName' row='5' id='tablenumber' placeholder='Enter Table No. Given below Qr code' req>
         <br>
       
@@ -235,6 +235,11 @@ console.log(special);
 
 //to send data base to the database
 function orderOnClick(){
+  var socket = io();
+var socket=io('/menu');
+  const txt='You have a new order'
+  socket.emit('sendKitchen',txt);
+  console.log('lol');
   const customerName=document.getElementById('customerName')
   const tablenumber=document.getElementById('tablenumber')
   
@@ -242,7 +247,7 @@ function orderOnClick(){
   document.querySelector('.checkout').onclick=()=>{
   
      if(customerName.value.length >0 && tablenumber.value.length=='' )
-    {alert('Please fill the table number given below qr menu')}
+    {alert('Please fill the table number ')}
     else if(tablenumber.value.length >0 && customerName.value.length=='' )
     {alert('Please enter your name')}
   
@@ -264,9 +269,7 @@ function orderOnClick(){
   }
   
   arrya.push(info)
-  
-  socket.emit('menu','You have a new order' );
-  
+
   const baseUrl='/';
   //send info to backend
   async function getInfo(){
@@ -337,12 +340,24 @@ async function getinfo() {
   
 
     const data=await res.json()
+console.log(data);
 
-const hh=data.filter((c)=>c.status==='cooked') || []
+const yo=[]
+data.map((x)=>{
 
-document.querySelector('.waiter').innerHTML=hh.length
-if(hh.length>0){
-console.log(hh.length);
+  x.orderedFood.map((z)=>{
+    if(z.status==='cooked'){
+      console.log(z);
+    yo.push(z)
+    
+    }})})
+
+
+
+console.log(yo);
+document.querySelector('.waiter').innerHTML=yo.length
+if(yo.length>0){
+console.log(yo.length);
 }
 }
 

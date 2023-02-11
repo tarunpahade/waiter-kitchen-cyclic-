@@ -333,6 +333,7 @@ input{
 }
 .onlineorders,.takeaway {
     background: white;
+    max-height: 17em;
     overflow-y: scroll;
     padding: 1em;
     border: 1px solid #2f4cdd;
@@ -343,6 +344,7 @@ input{
 
 @media only screen and (max-width: 600px) {
     .generateBill{
+        height: 55%;
         position: absolute;
         width: 90%;
         display: none;
@@ -367,6 +369,11 @@ input{
     }
     .flex{
         padding-left: 0;
+       
+
+    }
+    #ordertype{
+        display: block;
     }
     .table{
         width: 5.9em;

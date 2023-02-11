@@ -309,19 +309,16 @@ kot.innerHTML=`<a href='../kot/KOT.html' style='color:"white"' class='kot'>KOT</
 buttondiv.append(print,remove,kot)
 onlineorder.append(h1,customerName,number,buttondiv)  
 const onlineOrders=document.querySelector('.onlineorders')
+console.log(onlineOrders);
+console.log(onlineorder);
 onlineOrders.append(onlineorder)
-console.log(x.length+'ajja');
+console.log(x+'ajja');
 
 }
 
 })
 
-const torder=document.querySelector('.onlineorders')
-console.log(torder.innerHTML);
-if(torder.innerHTML=null){
-  console.log('nope');
-  torder.innerHTML='No orders yet'
-}
+
 
 
 // Checked the matched table numbers between two arrays tables and data and add into the result array
@@ -342,7 +339,7 @@ if(torder.innerHTML=null){
 
 bookedTables.push(search9)
 const j=data.filter(el => el.table === y);
-console.log(j);
+
 
 
 //generating bill templete in div on left corner

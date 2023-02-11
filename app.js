@@ -402,18 +402,16 @@ const { log } = require('console');
         .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
   }
   //twilio
-  const authToken = 'd3e2910aff173ee94bea532d24abab4a'; 
 
-  const accountSid = 'ACbf2608b126a238d429463d915859023d'; 
-const accountSid2='ACbf2608b126a238d429463d915859023d';
-const authToken2='3d178128d53f73e69e4aa2c99b725e8f'
+  const accountSid2='ACbf2608b126a238d429463d915859023d';
+  const authToken2='1442613d42a9dfb4203c43ccd2e427a5'
 const client = require('twilio')(accountSid2, authToken2); 
 async function sendSMSTwilo(text,to) {
 client.messages 
   .create({ 
      body: text,  
      messagingServiceSid: 'MG5b44a6c5d07e45371925e9b63ac0501d', 
-     from:'+13396751233',     
+     from:'+13396751233',        
      to: to 
    }) 
   .then(message => console.log(message.sid+'messege sent successfully')).catch((err)=>console.log(err)) 
@@ -501,7 +499,7 @@ console.log(pp);
       usersinfo.push(user)
 console.log(usersinfo);    
 if(usersinfo[0].position==='Waiter'){
-   res.redirect('/bill/bill.html')  
+   res.redirect('/menu')  
 
 }  
 else if(usersinfo[0].position==='Chef')
@@ -513,8 +511,8 @@ res.redirect('/kitchen2')
   //console.log('this is user info'+usersinfo);
   }
   else{
-    res.redirect('registerLogin/notfound.html')
-  console.log('else');
+    res.redirect('login/notfound.html')
+  
   }
   
   
@@ -526,22 +524,20 @@ res.redirect('/kitchen2')
 
 
 
-  const port = process.env.PORT || 8080;
+  // const port = process.env.PORT || 8080;
 
 //socket io
-const server=app.listen(port,()=>{
-  console.log('conn')
-})
+const server=app.listen(9000)
 
 const io = require("socket.io")(server);
 
 
 io.on('connection', (socket) => {
   
-  socket.on('menu', data=>{
-   
-  io.emit('message',data)
-  console.log('sent to chef');
+  socket.on('sendKitchen', data=>{
+   console.log(data);
+  io.emit('sendKitchenReady',data)
+
 })
 socket.on('ready', data=>{
    

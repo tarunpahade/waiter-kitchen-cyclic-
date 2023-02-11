@@ -284,9 +284,11 @@ async   function post(data,baseUrl){
     var socket=io('/kitchen2');
     var socket = io();
 
-    socket.on('message', data=>{
+    socket.on('sendKitchenReady', data=>{
+      alert('new ')
+      location.reload()  
       Notification.requestPermission().then(perm =>{
-          
+       
           if(perm==='granted'){
               const notification = new Notification("Example Notification",{
                   body:data,
@@ -297,12 +299,13 @@ async   function post(data,baseUrl){
                   alert('err')
               })
           } else{
-  
+            requestAndShowPermission();
+
           }
+      
       })
   
-      console.log('hii');
-      console.log(data);
+  
       const html=`<h1>  ${data}</h1>`
       messege.innerHTML +=html
   })
