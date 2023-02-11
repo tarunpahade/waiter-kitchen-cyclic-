@@ -386,7 +386,8 @@ app.get('/bill',(req,res)=>{
   })
   })
   //vonyage
-  const { Vonage } = require('@vonage/server-sdk')
+  const { Vonage } = require('@vonage/server-sdk');
+const { log } = require('console');
   const vonage = new Vonage({
     apiKey: "c5940ea8",
     apiSecret: "BzfUzC48vXNzeSNQ"
@@ -528,7 +529,9 @@ res.redirect('/kitchen2')
   const port = process.env.PORT || 8080;
 
 //socket io
-const server=app.listen(port)
+const server=app.listen(port,()=>{
+  console.log('conn')
+})
 
 const io = require("socket.io")(server);
 
