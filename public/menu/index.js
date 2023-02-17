@@ -2,6 +2,11 @@ var socket=io('/menu');
 var socket = io();
 
 
+document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
+    document.querySelector('.nav-fostrap').classList.toggle('visible')
+    
+      })
+
 document.querySelector('.menu2').addEventListener('click', () => {
     document.querySelector('.containernav2').style.display='block'
 })
@@ -370,6 +375,9 @@ navcart.innerHTML=basket.map((v)=>v.items).reduce((x,y)=>x+y,0)
 // calc()
 
 const baseUrl='/info'
+setInterval(() => {
+    getinfo()
+}, 1000);
     getinfo()
     
 
@@ -401,14 +409,28 @@ async function getinfo() {
     if(yo.length>0){
     console.log(yo.length);
     
-console.log(yo);
 document.querySelector('.waiter').innerHTML=yo.length
-if(yo.length>0){
-console.log(yo.length);
 }
-}
-
-document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
-    document.querySelector('.nav-fostrap').classList.toggle('visible')
     
-      })}
+    
+    }
+    socket.on('orderReady', data=>{
+        location.reload()  
+        Notification.requestPermission().then(perm =>{
+    
+            if(perm==='granted'){
+                const notification = new Notification("Example Notification",{
+                    body:data,
+                    data:{hello :'world'},
+                    tag:'hii'
+                })
+                notification.addEventListener('error',e=>{
+                    alert('err')
+                })
+            } 
+            
+        })
+    
+     
+    })
+

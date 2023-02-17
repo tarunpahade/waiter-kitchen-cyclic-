@@ -284,8 +284,8 @@ async   function post(data,baseUrl){
     var socket=io('/kitchen2');
     var socket = io();
 
-    socket.on('sendKitchenReady', data=>{
-      alert('new ')
+    socket.on('kitchenReady', data=>{
+
       location.reload()  
       Notification.requestPermission().then(perm =>{
        
@@ -299,7 +299,7 @@ async   function post(data,baseUrl){
                   alert('err')
               })
           } else{
-            requestAndShowPermission();
+            
 
           }
       

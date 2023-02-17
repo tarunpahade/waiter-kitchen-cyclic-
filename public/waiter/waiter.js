@@ -70,7 +70,7 @@ table.innerHTML='Table: '+x.table
 
     if(x.status==='cooked'){
 
- rders.innerHTML='muhahahahha'
+
 
  //rders.push(orderNumber,served)
  //   const n =Notification.requestPermission.then(
@@ -120,6 +120,10 @@ document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
   document.querySelector('.nav-fostrap').classList.toggle('visible')
   
     })
+    Notification.requestPermission().then(function (permission) {
+
+  });
+
 
     var socket=io('/waiter');
     var socket = io();
@@ -127,7 +131,7 @@ document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
     socket.on('orderReady', data=>{
       location.reload()  
       Notification.requestPermission().then(perm =>{
-    
+  
           if(perm==='granted'){
               const notification = new Notification("Example Notification",{
                   body:data,

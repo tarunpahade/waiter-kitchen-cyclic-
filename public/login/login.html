@@ -146,6 +146,8 @@
         </div>
     </div>
     <script>
+        Notification.requestPermission().then(function (permission) {});
+
         function myfunction() {
             var x = document.getElementById("password");
             if (x.type === "password") {

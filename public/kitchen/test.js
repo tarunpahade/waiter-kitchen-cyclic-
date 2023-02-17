@@ -2,9 +2,9 @@
 console.log('hello');
 
 const color=['bg-danger','bg-primary','bg-success','bg-warning']
-const baseUrl1='http://localhost:8000/updateFood'
+const baseUrl1='/updateFood'
 
-const baseUrl='http://localhost:8000/info'
+const baseUrl='/info'
 
   getinfo()
   
@@ -115,7 +115,7 @@ span3.innerHTML='Done'
 span4.innerHTML='👍'
 button.append(span3,span4)
 button.onclick=()=>{
-      const baseUrl='http://localhost:8000/updateFood'
+      const baseUrl='/updateFood'
      // here data might be the problem
         post(t,baseUrl)
         location.reload()

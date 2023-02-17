@@ -238,7 +238,7 @@ function orderOnClick(){
   var socket = io();
 var socket=io('/menu');
   const txt='You have a new order'
-  socket.emit('sendKitchen',txt);
+  socket.emit('kitchen','New order');
   console.log('lol');
   const customerName=document.getElementById('customerName')
   const tablenumber=document.getElementById('tablenumber')
@@ -426,3 +426,24 @@ var clearCart = () => {
   //  calc();
       TotalAmount();
     };
+    socket.on('orderReady', data=>{
+      location.reload()  
+      Notification.requestPermission().then(perm =>{
+  
+          if(perm==='granted'){
+              const notification = new Notification("Example Notification",{
+                  body:data,
+                  data:{hello :'world'},
+                  tag:'hii'
+              })
+              notification.addEventListener('error',e=>{
+                  alert('err')
+              })
+          } else{
+  
+          }
+          
+      })
+  
+   
+  })

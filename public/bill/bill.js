@@ -2,19 +2,10 @@ var socket=io('/kot&bill');
 var socket = io();
 
 
-document.querySelector('.menu-btn').addEventListener('click',()=>{
-
-  const side=document.querySelector('.haha')
+document.querySelector('.navbar-fostrap').addEventListener('click',()=>{
+  document.querySelector('.nav-fostrap').classList.toggle('visible')
   
-
-  
-  
-  side.classList.toggle('side')
-  side.classList.toggle('menu-sidebar')
-  side.classList.add('open')
-  
-  // }
-  })
+    })
   
 //next thing to do is to create two inputs for payboy and then print option 
 //and delete data from data base or send to another database
@@ -350,7 +341,7 @@ selectedTables.addEventListener('click',()=>{
 
   //right-container  inner html
   const bill= document.querySelector('.generateBill')
-bill.style.display='block'  
+bill.style.display='flex'  
   bill.innerHTML=` <div class='flexoid'><h3>${search9.name}</h3><i id='cross' class="fa-regular fa-circle-xmark" onclick='none()'></i></div>`
 
 function orders(){
@@ -396,7 +387,9 @@ customerName.setAttribute('id', 'customerName')
 const number=document.createElement('input')
 number.setAttribute('placeholder', 'Phone Number')
 number.setAttribute('id', 'PhoneNumber')
-bill.append(gridContainer,customerName,number)
+const inputs=document.createElement('div')
+inputs.append(customerName,number)
+bill.append(gridContainer,inputs)
 
 
 const buttondiv=document.createElement('div') 
@@ -420,7 +413,7 @@ remove.innerText='Remove'
 remove.addEventListener('click',(e)=>{
 j.map((Q)=>{
   document.querySelector('#table'+j[0].table).classList.remove('bookedTable')
-  document.querySelector('.generateBill').innerHTML='Click on the blue box to see orders'
+  document.querySelector('.generateBill').style.display='none'
 
   let search9=j.find((O)=> O.kot ===  Q.kot);
 

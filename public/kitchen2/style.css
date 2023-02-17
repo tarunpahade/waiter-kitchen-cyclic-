@@ -270,16 +270,17 @@ color: #000;
   }
   .categories{
     margin-top: 60px;
- 
-    display: flex;
-    flex-direction: column;
     width: 30%;
-    height: 100%;
-    overflow: auto;
+    height: 85vh;
+    flex: 1 1 auto;
+    overflow-y: scroll;
+   
   }
   .category{
-    height: 7em;
+
     margin: 0.25em;
+    height: 100;
+    width: 95;
   }
   .order-list{
     margin-left: 3%;

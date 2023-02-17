@@ -423,7 +423,7 @@ client.messages
   const { pp }=req.body
 console.log('request for message');
 const number=pp.number
-   sendSMSTwilo(pp.msg,'+91'+number)
+  //  sendSMSTwilo(pp.msg,'+91'+number)
   })
   app.get('/',(req,res)=>{
     res.redirect('/login')
@@ -534,9 +534,9 @@ const io = require("socket.io")(server);
 
 io.on('connection', (socket) => {
   
-  socket.on('sendKitchen', data=>{
+  socket.on('kitchen', data=>{
    console.log(data);
-  io.emit('sendKitchenReady',data)
+  io.emit('kitchenReady',data)
 
 })
 socket.on('ready', data=>{
@@ -567,3 +567,15 @@ client.messages
       }
 
 //O0ouB-9WXjzcaFIYs48e0hjvezalKxOgxGsebpi4
+app.get('/logout',(req,res)=>{
+    
+  console.log(usersinfo);
+registeredUser.findByIdAndUpdate(usersinfo[0]._id, { $set: { status: 'offline' }}, { new: true }, function (err, article) {
+  if (err) { console.log(err)}else{
+console.log(article);
+  
+  console.log('hii');
+  res.redirect('/login')  }
+});
+
+})
