@@ -50,7 +50,6 @@ data.map((x)=>{
 
 
 hoho.push(x.table)
-console.log(x.table+'table');
 //if order is takeaway
 if(x.table==='takeaway'){
 document.querySelector('.torder').style.display='block'
@@ -81,7 +80,6 @@ async function getinfo() {
     const data=await res.json()
 
 
-console.log(data);
 //update edit delete
 
 
@@ -90,7 +88,6 @@ var xc=0;
     if (data.length !== 0) {
       return ( data
         .map((f) => {
-console.log(f.status);
           if(f.status==='pending'){
 
     
@@ -117,7 +114,6 @@ var table = document.createElement('p')
 table.innerText ='table:'+ f.table
 table.classList.add('tableNumber')
 
-console.log(f+'this is f');
 //date and time
 const date=document.createElement('p')
 
@@ -213,7 +209,6 @@ const total=document.createElement('td')
 
 total.innerText='Total'
 const totalAmt=document.createElement('td')
-console.log(amounttt);
 totalAmt.innerText=f.orderedFood.length
 thead.append(total,totalAmt)
 tr2.append(thead)
@@ -300,10 +295,7 @@ kot.innerHTML=`<a href='../kot/KOT.html' style='color:"white"' class='kot'>KOT</
 buttondiv.append(print,remove,kot)
 onlineorder.append(h1,customerName,number,buttondiv)  
 const onlineOrders=document.querySelector('.onlineorders')
-console.log(onlineOrders);
-console.log(onlineorder);
 onlineOrders.append(onlineorder)
-console.log(x+'ajja');
 
 }
 
@@ -351,7 +343,6 @@ gridContainer.classList.add('grid-container')
 var theadaa=document.createElement('tbody')
   j.map((x)=>{
  x.orderedFood.map((y)=>{
-console.log(x);
 fooditems.push(y)
 
 const tr=document.createElement('tr')
@@ -395,15 +386,15 @@ bill.append(gridContainer,inputs)
 const buttondiv=document.createElement('div') 
 buttondiv.classList.add('buttondiv')
 const print= document.createElement('button') 
-print.innerText='Print bill'
+
+print.innerHTML=`
+<i class="fa-brands  fa-whatsapp " id='sms'></i>`
 const remove= document.createElement('button') 
 print.addEventListener('click',()=>{
 
   document.querySelector('.haha').style.display='block'
-  console.log(j)
   printbill(j)
   // document.querySelector('.haha').style.display='none'
-  console.log(document.querySelector('#table'+j[0].table));
   document.querySelector('#table'+j[0].table).classList.remove('bookedTable')
   
 })
@@ -424,185 +415,16 @@ j.map((Q)=>{
 })
 })
 const kota=document.createElement('button')
-kota.innerHTML='Print Kot'
+kota.innerHTML=`
+<i class="fa-regular sms fa-message" id='sms'></i>`
 kota.addEventListener('click',(e)=>{
   document.querySelector('.generateBill').style.display='none'
-  const baseUrl='/info'
-getinfo()
-async function getinfo() {
-  const res = await fetch(baseUrl,
-    {
-      method:'GET',
-      }
+ number.innerHTML
+  post(number.innerHTML,'/sms')
 
-    )
-  
-
-    const data=await res.json()
-
-
-console.log(data);
-//update edit delete
-
-
-var xc=0;
-
-    if (data.length !== 0) {
-      return ( data
-        .map((f) => {
-console.log(f.status);
-          if(f.status==='pending'){
-
-    console.log('this is not');
-            xc++          
-   
-            const card= document.createElement('div') 
-
-            
-card.classList.add('cardo')
-console.log(f+'i am f');
-///restraunt 
-const restrauntName= document.createElement('h3')
-var customerName = document.createElement('p')
-restrauntName.innerText='XYZ restraunt'
-//customer name 
-customerName.classList.add('customerName')
-customerName.innerText = 'Name: '+f.name
-//table
-var kot=document.createElement('p')
-kot.innerText="kot number: "+f.kot
-
-var table = document.createElement('p')
-table.innerText ='table:'+ f.table
-table.classList.add('tableNumber')
-
-
-//date and time
-const date=document.createElement('p')
-
-date.innerText="date: "+f.time+'-'+f.month
-
-const time = document.createElement('p')
-time.innerText ='time: '+ f.time2 +':'+f.min
-time.classList.add('time')
-//table of ordered items
-const gridContainer=document.createElement('table')
-gridContainer.classList.add('grid-container')
-const theadaa=document.createElement('thead')
-
-
-//item
-const item=document.createElement('td')
-item.classList.add('grid-item')
-item.innerText='Item'
-//quantity
-const quantity=document.createElement('td')
-quantity.classList.add('grid-item')
-quantity.innerText='Quantity'
-
-
-const hr=document.createElement('hr')
-
-theadaa.append(item,quantity)
-gridContainer.append(theadaa)
-
-
-var amounttt=[]
-
-const tb=document.createElement('tbody')
-
-const la = document.createElement('div')
-const vic= document.createElement('div')
-
-vic.append(restrauntName, customerName, table,kot,date,time)
-card.setAttribute('id','kot'+f.kot)
-card.classList.add('bookedTable')
-var zoo=[]
-zoo.push(xc)
-
-
-// const printElement=document.querySelector('#')
-// const last=document.body.lastChild
-// console.log(last);
-// console.log(printElement);
-//   document.querySelector('#'+printElement).style.display='block'
-// //e.target.parentElement.parentElement.style.bacgroundColor='red'
-//     printJS(printElement, 'html')
-
-
-
-   
-    post(f,'/update')
-
-  
-
-f.orderedFood.map((x) => {
-
-  //getting ordered food 
-    var nameOfFood = document.createElement('td')
-    nameOfFood.innerText = x.id.replace(/([A-Z])/g, ' $1').trim()
-nameOfFood.classList.add('grid-item')
-//quantity
-    var quantity = document.createElement('td')
-    quantity.innerText = x.items
-    quantity.classList.add('grid-item')
-    //price
-   
-
-    const tr3=document.createElement('tr')
-
-    tr3.append(nameOfFood, quantity)
-    tb.append(tr3) 
-
-})
-
-
-
-gridContainer.append(tb)
-
-// total logic
-
-var nums = amounttt.map(function(str) {
-
-
-return parseInt(str); });
-
-
-
-
-//total
-const tr2=document.createElement('table')
-const thead=document.createElement('thead')
-const total=document.createElement('td')
-
-total.innerText='Total'
-const totalAmt=document.createElement('td')
-console.log(amounttt);
-totalAmt.innerText=f.orderedFood.length
-thead.append(total,totalAmt)
-tr2.append(thead)
-// const tbody=document.createElement('tbody')
-// tbody.append(tr,tr2)
-
-
-
-//pushing
-
-vic.append(gridContainer,tr2,hr)
-la.setAttribute('id','lol'+xc.toString())
-la.append(vic)
-la.classList.add(xc.toString())
-
-
-
-card.append(la)
-document.body.append(card)
-console.log(card);
-printJS('kot'+f.kot,'html')
-la.classList.add('ol')
 }
-}))}
-}})
+)
+
 buttondiv.append(print,remove,kota)
 bill.append(buttondiv)
 
@@ -631,7 +453,7 @@ const printbill=(data)=>{
       if (data.length !== 0) {
  
   // var emailContent = document.getElementsByTagName('table')[0].textContent;
-  // console.log(emailContent);
+
 
 
   billno++
@@ -801,14 +623,70 @@ time.classList.add('time')
 const number=document.querySelector('#PhoneNumber').value
 
   
-  document.querySelector('#bill'+data[0].table).style.display='block' || console.log('none');
+  document.querySelector('#bill'+data[0].table).style.display='block' ;
+
+  const finaldata=document.querySelector('#phoneNumber').value 
 
  printJS('bill'+data[0].table, 'html')
+const bill =document.querySelector('#bill'+ data[0].table).innerText
 
 
-   console.log(number);
+// Find the HTML element you want to capture as an image
+const element = document.querySelector('#bill'+ data[0].table);
+ console.log(element.innerHTML);
+ 
+function sendApi(){
+ console.log('hohoh');
+  const json = {
+    html: element.innerHTML,
+    css: "body { padding: 1em; }"
+  };
+  
+  const username = "9a4e5d51-f632-4f8d-a00c-3df3d5b5ed45";
+  const password = "290b5505-f619-4e96-bbfb-78138a1f3282";
+  
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(json),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(username + ":" + password)
+    }
+  }
+  
+  fetch('https://hcti.io/v1/image', options)
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(res.status);
+      }
+    })
+    .then(data => {
+      // Image URL is available here
+      console.log(data.url)
+      const twiliodata={
+        img:data.url,
+        phone:number
+      }
+      
+const baseUr='/number'
+post(twiliodata,baseUr)
+    })
+    .catch(err => console.error(err));
+}
+
+sendApi()
+
+
+
+
+ console.log('sent');
+
+  //getUrl()
+
+
    
-  const finaldata=document.querySelector('#phoneNumber').value   
 
   const food=[]
   data.map((x)=>{
@@ -817,12 +695,11 @@ const number=document.querySelector('#PhoneNumber').value
     var search9=data.find((O)=> O.kot ===  x.kot);
   search9.number=finaldata
 food.push(search9.orderedFood)
-    //send info to backend
-   //post(search9)
+
  const yearr=data[0].year
  const week=data[0].week
  const timee=data[0].time
-console.log(x.hours);
+
 const month=data[0].month
 const minutes=x.min
     const billData={
@@ -838,8 +715,7 @@ week:week,
 month:month,
     minutes:minutes
      }
-     console.log(search9.orderedFood);
-console.log(food);
+    
      const msgdata={
       number,
       msg:`
@@ -852,16 +728,14 @@ console.log(food);
       `,
      }
      none()
-   
-const baseUrll='/bill';
-post(billData,baseUrll)    
-console.log(billData);  
-const baseUrl='/delete'
-console.log(search9);
-post(search9,baseUrl)
-const baseUr='/number'
 
-post(msgdata,baseUr)
+
+   
+// const baseUrll='/bill';
+// post(billData,baseUrll)    
+// const baseUrl='/delete'
+// post(search9,baseUrl)
+
 })   
 
  
@@ -916,13 +790,15 @@ removePrevious.remove()
         
         ).then(response => {
           if (!response.ok) {                                  // ***
-            console.log( "HTTP error " + response.status);  // ***
-          }                                                    // ***
+          }  else {
+            console.log('sent');
+          }                                                  // ***
           // ...use `response.json`, `response.text`, etc. here
         })
-        .catch(error => {
-          console.log(error);
-        });
-        location.reload()
-    console.log('posted');
+     ;
+      //  location.reload()
+   
       }
+
+
+    

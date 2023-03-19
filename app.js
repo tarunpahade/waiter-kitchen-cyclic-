@@ -8,14 +8,58 @@ const flash=require('express-flash')
 const session=require('express-session')
 const usersinfo=[]
 var app = express();
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+const aws = require('aws-sdk')
+
+require('aws-sdk/lib/maintenance_mode_message').suppress = true;
+
+const region='ap-south-1'
+const bucketName='billing-invoice-storage'
+const accessKeyId='AKIA3GWSZ4KUY52TDS5W'
+const secretAccessKey='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'
 
 
+const s3= new aws.S3({
+    region,
+    accessKeyId,
+    secretAccessKey,
+    signatureVersion:'v4'
+})
+//ias user link https://770314986153.signin.aws.amazon.com/console
+ async function generateUploadUrl(){
+   const imageName=`${Date.now()}`
+    const params =({
+        Bucket:bucketName,
+        Key: imageName,
+        Expires:60
+    })
+    const uploadUrl=await s3.getSignedUrlPromise('putObject',params)
+return uploadUrl
+}
 app.use(flash())
-// app.use(session({
-//   secret: process.env.SESSION_SECRET,
-//   resave:false,
-//   saveUninitialized:false,
-// }))
+
+var htmlToImage = require('html-to-image');
+const ingredient=new mongoose.Schema({
+  rawMaterial:String,
+  menuItem:String,
+quantity:Number,
+unit:String
+  })
+var ingredients = mongoose.model('orderedRecipe',ingredient,'recipe')
+app.get('/reciepe',(req,res)=>{
+  ingredients.find({},(err,user)=>{
+     
+    if(err){
+         console.log(err);
+       }
+       res.send(user);
+     })
+})
+
+
+
+
 
 var y=1
 
@@ -34,6 +78,14 @@ mongoose.set("strictQuery", false);
 const db=mongoose.connection
 db.on("error",()=>{console.log('err');})
 db.once('open',()=>{console.log('opened');})
+
+
+const port = process.env.PORT || 8080;
+
+//socket io
+const server=app.listen(port)
+
+const io = require("socket.io")(server)
 
 const orders=mongoose.Schema({
 name:String,
@@ -58,6 +110,16 @@ orderedFood:[{
    // compile schema to model
    var order = mongoose.model('data', orders, 'kot');
 
+   const category=new mongoose.Schema({
+    name:String,
+    price:Number,
+  quantity:Number,
+  unit:String,
+  
+    })
+  var categories = mongoose.model('orderedCategory',category,'category')
+  
+  
    app.get('/',(req,res)=>{
   console.log('haha');
   res.redirect('/menu')
@@ -85,7 +147,7 @@ const currentTime=+date.getHours();
   const table=pp[0].tableNumber  
 const orderedItems=pp[0].orderedItems
 
-    console.log(minutes)
+
 
     const data=new order({
       min:minutes,
@@ -107,14 +169,81 @@ status:'pending',
   data.save(function (err, book) {
     if (err) return console.error('fucked up code'+err);
     y++
-    console.log(book.name + " saved to collection.");
+ 
   });
 
     })
 
+app.post('/ingredients',async(req,res)=>{
+  const { pp }=req.body
+  console.log(pp)
+  const quantity=pp.items
+  const menuItem=pp.id.replace(/([A-Z])/g, ' $1').trim()
+  
+
+  const user= await  ingredients.find({menuItem})
+console.log(user);
+  if(user==null){
+console.log('no user found');
+}else{
+  user.forEach(async user=>{
+
+
+  
+const substract= Number(user.quantity)*Number(quantity)
+
+ const rawMaterial=await categories.findOne({name:user.rawMaterial})
+if(rawMaterial==null){
+}else{
+
+ const result= Number(rawMaterial.quantity)-Number(substract)
+
+
+
+
+ if(result<0 || result===0){
+  categories.deleteOne({_id:pp._id}).then((err,book)=>{
+    if(err){console.log(err);}else{console.log(book);}
+    
+  })
+
+  
+  
+  
+ }
+if(result===0 || result<200){
+  
+
+  io.on('connection', (socket) => {
+    socket.emit('notificationToClient', 'you are running out of '+rawMaterial.name); //message sent from server to client 
+    });
+}
+
+
+ categories.findByIdAndUpdate(rawMaterial._id, {quantity:Number(result) }, { new: true }, function (err, article) {
+  if(err){
+   console.log(err);
+  }else{
+    console.log('Success');
+  }});
+
+
+}
+
+})
+
+
+}
+
+
+
+
+})
+
+
 //from menu to database
-app.post('/bill',(req,res)=>{
-  console.log('posting');
+app.post('/bill',async(req,res)=>{
+  
   const { pp } =req.body;
   console.log(pp);
 
@@ -131,38 +260,54 @@ const hours=pp.hours
 const month=pp.month
 
 
-function run(){
+const user= await  bill.findOne({table})
 
-    const data=new bill({
-      name:name,
-    month:month,
-      table:table,
-      date:todayDate,
+  
+console.log( user === null)
+//if there is no previous raw material alredy in database
+ if (user==null) {
+  const data=new bill({
+    name:name,
+  month:month,
+    table:table,
+    date:todayDate,
 hours:hours,
-  year:year,
+year:year,
 number:number,
-  kot:pp.kot,
+kot:pp.kot,
 
-      orderedFood:orderedItems,
-      status:status
-  })
+    orderedFood:orderedItems,
+    status:status
+})
 
-   data.save(function (err, book) {
-    if (err) { console.error('fucked up code'+err);}
-else{console.log('succesfully upated');}
+ data.save(function (err, book) {
+  if (err) { console.error('fucked up code'+err);}
+
+  
+});
+
+ }else{
+  bill.find({table}, { $push: { orderedFood: orderedItems }}, { new: true }, function (err, article) {
+    if (err) { console.log(err)}else{
+console.log(article);
     
+   }
   });
 
+ 
+ }
 
-}
-run()
+
+
+
+
 
 })
 
 app.get('/waiter',(req,res)=>{
   res.sendFile(__dirname+'/public/waiter/waiter.html')
 })
-app.get('/cart',(req,res)=>{
+app.get('/menu/cart',(req,res)=>{
   res.sendFile(__dirname+'/public/menu/cart.html')
 
 })
@@ -285,10 +430,16 @@ app.get('/info',(req,res)=>{
     var bill = mongoose.model('orderedFood',billschema,'billS')
 //sends data to dashboard
 app.get('/bill',(req,res)=>{
-    // console.log(usersinfo);
-  //   if(usersinfo.length===0){
-  //    console.log('haha');
     
+    
+  //     }else if(usersinfo.length>0){
+  
+  
+  // console.log(usersinfo[0].username+'username');
+  
+  
+  // if(usersinfo[0].username==='admin'){
+
   //     }else if(usersinfo.length>0){
   
   
@@ -304,14 +455,12 @@ app.get('/bill',(req,res)=>{
       }
       res.send(user);
     })
-  // }
   
-  // }
   
   });
 
   
-  //sends bill data
+  //sends bill data to the database
   app.post('/',(req,res)=>{
     console.log('posting');
     const { pp } =req.body;
@@ -320,7 +469,7 @@ app.get('/bill',(req,res)=>{
     const name=pp.name
   const table=pp.table  
   const orderedItems=pp.orders[0]
-  
+  console.log(pp.orders[0]);
   const year=pp.year
   const week=pp.week
   const todayDate=pp.date
@@ -364,7 +513,7 @@ app.get('/bill',(req,res)=>{
   const { pp }=req.body
   console.log(pp);
   order.deleteOne({_id:pp._id}).then((err,book)=>{
-    if(err){console.log(err);}else{console.log(book);}
+    if(err){console.log(err);}else{console.log();}
     
   })
   })
@@ -375,7 +524,7 @@ app.get('/bill',(req,res)=>{
     const { pp }=req.body
   const id=pp._id
   console.log(pp);
-    order.updateOne(pp,{status: 'printed'},   function (err, docs) {
+    order.findByIdAndUpdate(id,{status: 'printed'},   function (err, docs) {
       if (err){
           console.log(err)
       }
@@ -385,95 +534,7 @@ app.get('/bill',(req,res)=>{
   
   })
   })
-  //vonyage
-  const { Vonage } = require('@vonage/server-sdk');
-const { log } = require('console');
-  const vonage = new Vonage({
-    apiKey: "c5940ea8",
-    apiSecret: "BzfUzC48vXNzeSNQ"
-  })
-  const from = "Vonage APIs"
-  const to = "918010669013"
-  
-  
-  async function sendSMS(text,to) {
-    await vonage.sms.send({to, from, text})
-        .then(resp => { console.log('Message sent successfully'); console.log(resp); })
-        .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
-  }
-  //twilio
-
-  const accountSid2='ACbf2608b126a238d429463d915859023d';
-  const authToken2='1442613d42a9dfb4203c43ccd2e427a5'
-const client = require('twilio')(accountSid2, authToken2); 
-async function sendSMSTwilo(text,to) {
-client.messages 
-  .create({ 
-     body: text,  
-     messagingServiceSid: 'MG5b44a6c5d07e45371925e9b63ac0501d', 
-     from:'+13396751233',        
-     to: to 
-   }) 
-  .then(message => console.log(message.sid+'messege sent successfully')).catch((err)=>console.log(err)) 
-
-  }
-
-  app.post('/number',(req,res)=>{
-    console.log('heyy');
-  const { pp }=req.body
-console.log('request for message');
-const number=pp.number
-  //  sendSMSTwilo(pp.msg,'+91'+number)
-  })
-  app.get('/',(req,res)=>{
-    res.redirect('/login')
-    })
-
-//sends kitchen files
-app.get('/orders',(req,res)=>{
-  res.sendFile(__dirname+'/public/kitchen2/index.html')
-
-});
-//updates status of food kitchen 1
- app.post('/updateFood',(req,res)=>{
-  const { pp }=req.body
-const id=pp._id
-console.log(id);
-  order.findByIdAndUpdate(id,{status:'cooked'},   function (err, docs) {
-  if (err){
-      console.log(err)
-  }
-  else{
-      console.log("Updated User : ", docs.type);
-  }
-
-})  
-})
-//updates status of food kitchen 2
-app.post('/updateKitchen', async(req,res)=>{
-  console.log('break');
-  const { pp }=req.body
-const id=pp._id 
-console.log(pp);
-  order.findByIdAndUpdate(id,pp,   function (err, docs) {
-  if (err){
-      console.log(err)
-  }
-  else{
-      console.log( docs+'not');
-  }
-
-}) 
-
-
-
-})
-
-
-    app.get('/login',(req,res)=>{
-      res.sendFile(__dirname+'/public/login/login.html')
-    })
-    
+  //directs user according to the information provided
   app.post('/login',async(req,res)=>{
   
     try {
@@ -522,14 +583,142 @@ res.redirect('/kitchen2')
   })
 
 
+////////////         Billing          ////////////
 
 
-  const port = process.env.PORT || 8080;
 
-//socket io
-const server=app.listen(port)
+//to send bill through whatsapp
+  app.post('/number',(req,res)=>{
+    const { pp }=req.body
+    console.log(pp)
+    const number=pp.phone
+    const image=pp.img
+  //twilio
+  const authTokenW = '7f326b993d4ae5db4b27e722f9558fbb';
+  const accountSid2='ACbf2608b126a238d429463d915859023d';
 
-const io = require("socket.io")(server);
+const client = require('twilio')(accountSid2, authTokenW); 
+
+client.messages 
+  .create({ 
+     body: 'Thanks for visiting restraunt',  
+     from: 'whatsapp:+14155238886',
+    //  from:'+13396751233',        
+     to: `whatsapp:+91${number}`,
+     mediaUrl:image
+   
+   }) 
+  .then(message => console.log(message.sid+'messege sent successfully')).catch((err)=>console.log(err)) 
+
+  
+  })
+  //to send bill through whatsapp
+
+  app.post('/sms',(req,res)=>{
+    const { pp }=req.body
+    console.log(pp)
+    const number=pp.phone
+    const image=pp.img
+    const authTokenW = '7f326b993d4ae5db4b27e722f9558fbb';
+    const accountSid2='ACbf2608b126a238d429463d915859023d';
+  
+  const client = require('twilio')(accountSid2, authTokenW); 
+    client.messages 
+    .create({ 
+       body: `Thanks for visiting restraunt
+       this is link to your bill ${image}
+       `,  
+        from:'+13396751233',        
+       to: `+91${number}`,
+      
+     
+     }) 
+    .then(message => console.log(message.sid+'messege sent successfully')).catch((err)=>console.log(err)) 
+    
+  })
+
+////////////         End Billing         ////////////
+
+
+
+
+app.get('/login',(req,res)=>{
+  res.sendFile(__dirname+'/public/login/login.html')
+})
+
+
+
+  app.get('/',(req,res)=>{
+    res.redirect('/login')
+    })
+
+//sends kitchen files
+app.get('/orders',(req,res)=>{
+  res.sendFile(__dirname+'/public/kitchen2/index.html')
+
+});
+//logs out
+app.get('/logout',(req,res)=>{
+    
+  console.log(usersinfo);
+registeredUser.findByIdAndUpdate(usersinfo[0]._id, { $set: { status: 'offline' }}, { new: true }, function (err, article) {
+  if (err) { console.log(err)}else{
+console.log(article);
+  
+  console.log('hii');
+  res.redirect('/login')  }
+});
+
+})
+
+
+
+
+//updates status of food kitchen 1
+app.post('/updateFood',(req,res)=>{
+  const { pp }=req.body
+const id=pp._id
+console.log(id);
+  order.findByIdAndUpdate(id,{status:'cooked'},   function (err, docs) {
+  if (err){
+      console.log(err)
+  }
+  else{
+      console.log("Updated User : ", docs.type);
+  }
+
+})  
+})
+//updates status of food kitchen 2
+app.post('/updateKitchen', async(req,res)=>{
+  
+  const { pp }=req.body
+const id=pp._id 
+console.log(pp);
+
+
+
+  order.findByIdAndUpdate(id,pp,   function (err, docs) {
+  if (err){
+      console.log(err)
+  }
+  else{
+      console.log( docs+'not');
+  }
+
+}) 
+
+
+
+})
+
+
+
+
+
+
+
+;
 
 
 io.on('connection', (socket) => {
@@ -538,6 +727,9 @@ io.on('connection', (socket) => {
    console.log(data);
   io.emit('kitchenReady',data)
 
+})
+socket.on('outofstock',data=>{
+  io.emit('stockfinished',data)
 })
 socket.on('ready', data=>{
    
@@ -551,31 +743,13 @@ socket.on('ready', data=>{
   // });
 });
 
-function sendWhatsapp(number, data){
 
-
- 
-client.messages 
-      .create({ 
-         body: data,
-         from: 'whatsapp:+14155238886',       
-         to: 'whatsapp:'+number 
-       }) 
-      .then(message => console.log(message.sid)) 
-      .done();
-
-      }
 
 //O0ouB-9WXjzcaFIYs48e0hjvezalKxOgxGsebpi4
-app.get('/logout',(req,res)=>{
-    
-  console.log(usersinfo);
-registeredUser.findByIdAndUpdate(usersinfo[0]._id, { $set: { status: 'offline' }}, { new: true }, function (err, article) {
-  if (err) { console.log(err)}else{
-console.log(article);
-  
-  console.log('hii');
-  res.redirect('/login')  }
-});
 
-})
+//whatsapp
+// curl -i -X POST \
+//   https://graph.facebook.com/v16.0/105954558954427/messages \
+//   -H 'Authorization: Bearer EAAFl...' \
+//   -H 'Content-Type: application/json' \
+//   -d '{ "messaging_product": "whatsapp", "to": "15555555555", "type": "template", "template": { "name": "hello_world", "language": { "code": "en_US" } } }'

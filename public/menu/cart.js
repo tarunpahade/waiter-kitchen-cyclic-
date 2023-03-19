@@ -1,4 +1,5 @@
-
+var socket = io();
+var socket=io('/menu');
 
 
 
@@ -29,7 +30,7 @@ async function getinfos() {
   
 
     const data=await res.json()
-console.log(data);
+
 
 data.map((x)=>{
 
@@ -137,10 +138,9 @@ const food=[]
         if (basket.length !== 0) {
           return (scart.innerHTML = basket
             .map((x) => {
-kot++;console.log(x);
-console.log(special);
+kot++;
              var search = saojiSpecial.find((y) => y.item.replace(/ +/g, "") === x.id) || special.find((y) => y.item.replace(/ +/g, "") === x.id) || staters.find((y) => y.item.replace(/ +/g, "") === x.id) || vegMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || paneerMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || kalaMasala.find((y) => y.item.replace(/ +/g, "") === x.id) || biryani.find((y) => y.item.replace(/ +/g, "") === x.id) || chinese.find((y) => y.item.replace(/ +/g, "") === x.id) || roti.find((y) => y.item.replace(/ +/g, "") === x.id) || dal.find((y) => y.item.replace(/ +/g, "") === x.id) || rice.find((y) => y.item.replace(/ +/g, "") === x.id) ||deserts.find((y) => y.item.replace(/ +/g, "") === x.id) ||[];
-            console.log(search);
+           
              food.push(search.price,x.id,x.items);
               return `
              
@@ -202,7 +202,7 @@ console.log(special);
           })
           .reduce((x, y) => x + y, 0);
     const username=JSON.parse(localStorage.getItem("user"))
-    console.log(username[0].username);    
+
     label.innerHTML = `
         <h2>Total Bill : ₹ ${amount}</h2>
         <h2>Total Orders : ${basket.length}</h2>
@@ -223,8 +223,7 @@ console.log(special);
     
         `;
       } else return;
-     // </form>       
-      // <form action="/haha" method='POST'>
+   
     };
     
 
@@ -235,11 +234,10 @@ console.log(special);
 
 //to send data base to the database
 function orderOnClick(){
-  var socket = io();
-var socket=io('/menu');
-  const txt='You have a new order'
+ 
+ 
   socket.emit('kitchen','New order');
-  console.log('lol');
+
   const customerName=document.getElementById('customerName')
   const tablenumber=document.getElementById('tablenumber')
   
@@ -258,47 +256,18 @@ var socket=io('/menu');
     else{
    
   
-  
-  
-
-  
   let info={
     'customerName':customerName.value,
     'tableNumber':tablenumber.value,
     'orderedItems':basket,
   }
-  
+//send info to backend  
   arrya.push(info)
-
   const baseUrl='/';
-  //send info to backend
-  async function getInfo(){
-  
-    const res=await fetch(baseUrl,
-      {
-        method:"POST",
-      headers: {
-  "Content-Type": 'application/json'
-      },
-      body: JSON.stringify({
-        pp:arrya})
-    }
-  
-      
-      ).then(response => {
-        if (!response.ok) {                                  // ***
-          console.log( "HTTP error " + response.status);  // ***
-        }                                                    // ***
-        // ...use `response.json`, `response.text`, etc. here
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  
-    }
-    getInfo()
-  
-  
+  post(arrya,baseUrl)
+
+
+
   
   
   label.innerHTML=`
@@ -340,24 +309,24 @@ async function getinfo() {
   
 
     const data=await res.json()
-console.log(data);
+
 
 const yo=[]
 data.map((x)=>{
 
   x.orderedFood.map((z)=>{
     if(z.status==='cooked'){
-      console.log(z);
+   
     yo.push(z)
     
     }})})
 
 
 
-console.log(yo);
+
 document.querySelector('.waiter').innerHTML=yo.length
 if(yo.length>0){
-console.log(yo.length);
+
 }
 }
 
@@ -381,7 +350,7 @@ var clearCart = () => {
 
     var increment = (id) => {
       let selectedItem = id;
-      console.log(id);
+   
       let search = basket.find((x) => x.id === selectedItem.id);
    
     let search9=basket.find((y)=> y.id === selectedItem.id );
@@ -447,3 +416,31 @@ var clearCart = () => {
   
    
   })
+
+
+
+  async function post(arrya,baseUrl){
+  
+    const res=await fetch(baseUrl,
+      {
+        method:"POST",
+      headers: {
+  "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({
+        pp:arrya})
+    }
+  
+      
+      ).then(response => {
+        if (!response.ok) {                                  // ***
+          console.log( "HTTP error " + response.status);  // ***
+        }                                                    // ***
+        // ...use `response.json`, `response.text`, etc. here
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  
+    }
+   

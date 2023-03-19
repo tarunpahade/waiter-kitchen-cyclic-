@@ -191,6 +191,13 @@ socket.emit('ready', x )
 
 const baseUrl='/updateKitchen'
 post(a,baseUrl)
+console.log(a.orderedFood);
+a.orderedFood.map((x)=>{
+  const baseUrl2='/ingredients';
+  post(x,baseUrl2)
+  
+})
+
 
 }
 })

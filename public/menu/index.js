@@ -434,3 +434,7 @@ document.querySelector('.waiter').innerHTML=yo.length
      
     })
 
+    socket.on('notificationToClient', (data) => { //received message 
+    console.log(data);
+        alert(data)
+    })
