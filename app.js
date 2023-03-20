@@ -650,6 +650,7 @@ client.messages
   
     // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
     if (req.body.object) {
+      console.log('lvl1');
       if (
         req.body.entry &&
         req.body.entry[0].changes &&
@@ -657,26 +658,31 @@ client.messages
         req.body.entry[0].changes[0].value.messages &&
         req.body.entry[0].changes[0].value.messages[0]
       ) {
+        console.log('body is obj lvl2');
         let phone_number_id =
           req.body.entry[0].changes[0].value.metadata.phone_number_id;
         let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
         let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
       console.log(from,msg_body);
-        axios({
+      console.log("https://graph.facebook.com/v16.0/" +  phone_number_id +"/messages?access_token=" +process.env.TOKEN);  
+      axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v16.0/" +
-            phone_number_id +
-            "/messages?access_token=" +process.env.TOKEN,
+          url:"https://graph.facebook.com/v16.0/" +  phone_number_id +"/messages?access_token=" +process.env.TOKEN,
           data: {
             messaging_product: "whatsapp",
             to: from,
             text: { body: "your message is : "+msg_body },
           },
           headers: { "Content-Type": "application/json" },
-        });
+        })  .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });;
+        console.log('succesfully sent');
       }
-      res.sendStatus(200);
+      res.send('sent');
     } else {
       // Return a '404 Not Found' if event is not from a WhatsApp API
       res.sendStatus(404);
