@@ -670,7 +670,7 @@ client.messages
           data: {
             messaging_product: "whatsapp",
             to: from,
-            text: { body: "Ack: "+msg_body },
+            text: { body: "your message is : "+msg_body },
           },
           headers: { "Content-Type": "application/json" },
         });
