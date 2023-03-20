@@ -5,41 +5,14 @@ const bodyParser = require('body-parser');
 const path= require('path');
 var cors = require('cors')
 const flash=require('express-flash')
-const session=require('express-session')
 const usersinfo=[]
 var app = express();
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
-const aws = require('aws-sdk')
-
-require('aws-sdk/lib/maintenance_mode_message').suppress = true;
-
-const region='ap-south-1'
-const bucketName='billing-invoice-storage'
-const accessKeyId='AKIA3GWSZ4KUY52TDS5W'
-const secretAccessKey='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'
-
-
-const s3= new aws.S3({
-    region,
-    accessKeyId,
-    secretAccessKey,
-    signatureVersion:'v4'
-})
+require('dotenv').config()
 //ias user link https://770314986153.signin.aws.amazon.com/console
- async function generateUploadUrl(){
-   const imageName=`${Date.now()}`
-    const params =({
-        Bucket:bucketName,
-        Key: imageName,
-        Expires:60
-    })
-    const uploadUrl=await s3.getSignedUrlPromise('putObject',params)
-return uploadUrl
-}
+
 app.use(flash())
 
-var htmlToImage = require('html-to-image');
+
 const ingredient=new mongoose.Schema({
   rawMaterial:String,
   menuItem:String,
@@ -287,8 +260,8 @@ kot:pp.kot,
 });
 
  }else{
-  bill.find({table}, { $push: { orderedFood: orderedItems }}, { new: true }, function (err, article) {
-    if (err) { console.log(err)}else{
+  bill.find({table}, { push: { orderedFood: orderedItems }}, { new: true }, function (err, article) {
+    if (err) { console.log(err+'error in billing')}else{
 console.log(article);
     
    }
@@ -357,8 +330,8 @@ const foodlist=mongoose.Schema(
     
        // compile schema to model
        var food = mongoose.model( 'fooddata',foodlist, 'orderlist');
-    
-    
+     
+
 app.post('/send',(req,res)=>{
   const { pp }=req.body
 
@@ -582,10 +555,42 @@ res.redirect('/kitchen2')
     }
   })
 
+  const feedback=mongoose.Schema({ 
+    description:String,
+    name:String,
+    number:Number,
+    review:[{
+    name:String,
+    rating:String
+}],
+})
+var review = mongoose.model( 'rating',feedback, 'feedback');
+app.post('/feedback',(req,res)=>{
+  console.log('posting');
+  const { pp } =req.body;
+  console.log(pp);
+const data =new review({
+  description:pp.description,
+  name:pp.name,
+  number:pp.number,
+  review:pp.rating,
+})
+data.save(function (err, book) {
+  if (err) { console.error('fucked up code'+err);}
+else{console.log('succesfully upated');}
+  
+});
+})
+
+
 
 ////////////         Billing          ////////////
 
-
+app.get('/feedback',(req,res)=>{
+  console.log(req.params);
+ 
+  res.sendFile(__dirname+'/public/feedback/index.html')
+})
 
 //to send bill through whatsapp
   app.post('/number',(req,res)=>{
@@ -593,15 +598,16 @@ res.redirect('/kitchen2')
     console.log(pp)
     const number=pp.phone
     const image=pp.img
+    const url=pp.url
   //twilio
-  const authTokenW = '7f326b993d4ae5db4b27e722f9558fbb';
+  const authTokenW = '0ebdc24519467973dd2a8f48c91faa71';
   const accountSid2='ACbf2608b126a238d429463d915859023d';
 
 const client = require('twilio')(accountSid2, authTokenW); 
 
 client.messages 
   .create({ 
-     body: 'Thanks for visiting restraunt',  
+     body: `Thanks for visiting restraunt. Please give us your feedback ${url}`,  
      from: 'whatsapp:+14155238886',
     //  from:'+13396751233',        
      to: `whatsapp:+91${number}`,
@@ -610,10 +616,8 @@ client.messages
    }) 
   .then(message => console.log(message.sid+'messege sent successfully')).catch((err)=>console.log(err)) 
 
-  
   })
   //to send bill through whatsapp
-
   app.post('/sms',(req,res)=>{
     const { pp }=req.body
     console.log(pp)
@@ -636,6 +640,79 @@ client.messages
     .then(message => console.log(message.sid+'messege sent successfully')).catch((err)=>console.log(err)) 
     
   })
+
+  app.post("/webhook", (req, res) => {
+    // Parse the request body from the POST
+    let body = req.body;
+  
+    // Check the Incoming webhook message
+    console.log(JSON.stringify(req.body, null, 2));
+  
+    // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
+    if (req.body.object) {
+      if (
+        req.body.entry &&
+        req.body.entry[0].changes &&
+        req.body.entry[0].changes[0] &&
+        req.body.entry[0].changes[0].value.messages &&
+        req.body.entry[0].changes[0].value.messages[0]
+      ) {
+        let phone_number_id =
+          req.body.entry[0].changes[0].value.metadata.phone_number_id;
+        let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
+        let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v12.0/" +
+            phone_number_id +
+            "/messages?access_token=" +process.env.TOKEN,
+          data: {
+            messaging_product: "whatsapp",
+            to: from,
+            text: { body: "Ack: "+msg_body },
+          },
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+      res.sendStatus(200);
+    } else {
+      // Return a '404 Not Found' if event is not from a WhatsApp API
+      res.sendStatus(404);
+    }
+  });
+  
+  // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
+  // info on verification request payload: https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests 
+  app.get("/webhook", (req, res) => {
+    /**
+     * UPDATE YOUR VERIFY TOKEN
+     *This will be the Verify Token value when you set up webhook
+    **/
+    const verify_token = process.env.VERIFY_TOKEN;
+  
+    // Parse params from the webhook verification request
+    let mode = req.query["hub.mode"];
+    let token = req.query["hub.verify_token"];
+    let challenge = req.query["hub.challenge"];
+  
+    // Check if a token and mode were sent
+    if (mode && token) {
+      // Check the mode and token sent are correct
+      if (mode === "subscribe" && token === verify_token) {
+        // Respond with 200 OK and challenge token from the request
+        console.log("WEBHOOK_VERIFIED");
+        res.status(200).send(challenge);
+      } else {
+        // Responds with '403 Forbidden' if verify tokens do not match
+        res.sendStatus(403);
+      }
+    }
+  });
+
+
+
+
 
 ////////////         End Billing         ////////////
 

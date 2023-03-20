@@ -521,11 +521,11 @@ time.classList.add('time')
  vic.setAttribute('id','bill'+data[0].table) 
 
  var foodmsg=[];
-  
+  var foodlist=[]
   data.map((y) => {
 
   y.orderedFood.map((x)=>{
-
+foodlist.push(x.id)
 
     //getting ordered food 
       var nameOfFood = document.createElement('td')
@@ -633,7 +633,7 @@ const bill =document.querySelector('#bill'+ data[0].table).innerText
 
 // Find the HTML element you want to capture as an image
 const element = document.querySelector('#bill'+ data[0].table);
- console.log(element.innerHTML);
+
  
 function sendApi(){
  console.log('hohoh');
@@ -664,10 +664,22 @@ function sendApi(){
     })
     .then(data => {
       // Image URL is available here
+
+
+const url=new URL(window.location.href)
+url.pathname='/feedback'
+ 
+ url.searchParams.set('name',n.value)
+url.searchParams.set('orders',foodlist)
+url.searchParams.set('number',number)
+console.log(url.href);
+console.log(url)
+console.log(url.search)
       console.log(data.url)
       const twiliodata={
         img:data.url,
-        phone:number
+        phone:number,
+        url:url.href
       }
       
 const baseUr='/number'
@@ -678,10 +690,6 @@ post(twiliodata,baseUr)
 
 sendApi()
 
-
-
-
- console.log('sent');
 
   //getUrl()
 
@@ -731,10 +739,10 @@ month:month,
 
 
    
-// const baseUrll='/bill';
-// post(billData,baseUrll)    
-// const baseUrl='/delete'
-// post(search9,baseUrl)
+const baseUrll='/bill';
+post(billData,baseUrll)    
+const baseUrl='/delete'
+post(search9,baseUrl)
 
 })   
 
