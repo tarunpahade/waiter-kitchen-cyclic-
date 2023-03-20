@@ -600,8 +600,8 @@ app.get('/feedback',(req,res)=>{
     const image=pp.img
     const url=pp.url
   //twilio
-  const authTokenW = '0ebdc24519467973dd2a8f48c91faa71';
-  const accountSid2='ACbf2608b126a238d429463d915859023d';
+  const authTokenW = process.env.AUTH_TOKEN;
+  const accountSid2=process.env.ACC_SID;
 
 const client = require('twilio')(accountSid2, authTokenW); 
 
@@ -623,8 +623,8 @@ client.messages
     console.log(pp)
     const number=pp.phone
     const image=pp.img
-    const authTokenW = '7f326b993d4ae5db4b27e722f9558fbb';
-    const accountSid2='ACbf2608b126a238d429463d915859023d';
+    const authTokenW =  process.env.AUTH_TOKEN;
+    const accountSid2=process.env.ACC_SID;
   
   const client = require('twilio')(accountSid2, authTokenW); 
     client.messages 
