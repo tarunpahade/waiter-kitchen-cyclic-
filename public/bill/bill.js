@@ -683,7 +683,36 @@ console.log(url.search)
       }
       
 const baseUr='/number'
-post(twiliodata,baseUr)
+// post(twiliodata,baseUr)
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", "Bearer EAAHpWJgc9ysBAHFMrspVbblT3bTqBltJs2HiE7uSLYukKvuXV6AtFIvCXS6wZAkLmuZAB8ZCD4m9e09gAZA4DhGGuNTucS9B3dm4M13KkJPT6qp0u0grhZA3wwja6cG0MAZCFkCU4hfVBvtChdfMhGiVXVYF5UBbxHOB0WZAHq2OMZAYYscIYHj8OMDgROMMDD3aqODVRfhAegZDZD");
+
+var raw = JSON.stringify({
+  "messaging_product": "whatsapp",
+  "from": "919766289013",
+  "to": "918010669013",
+  "type": "template",
+  "template": {
+    "name": "hello_world",
+    "language": {
+      "code": "en_US"
+    }
+  }
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://graph.facebook.com/v16.0/115687568138953/messages", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
     })
     .catch(err => console.error(err));
 }
@@ -739,10 +768,10 @@ month:month,
 
 
    
-const baseUrll='/bill';
-post(billData,baseUrll)    
-const baseUrl='/delete'
-post(search9,baseUrl)
+// const baseUrll='/bill';
+// post(billData,baseUrll)    
+// const baseUrl='/delete'
+// post(search9,baseUrl)
 
 })   
 
