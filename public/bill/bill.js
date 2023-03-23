@@ -686,12 +686,12 @@ const baseUr='/number'
 // post(twiliodata,baseUr)
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
-myHeaders.append("Authorization", "Bearer EAAHpWJgc9ysBAHFMrspVbblT3bTqBltJs2HiE7uSLYukKvuXV6AtFIvCXS6wZAkLmuZAB8ZCD4m9e09gAZA4DhGGuNTucS9B3dm4M13KkJPT6qp0u0grhZA3wwja6cG0MAZCFkCU4hfVBvtChdfMhGiVXVYF5UBbxHOB0WZAHq2OMZAYYscIYHj8OMDgROMMDD3aqODVRfhAegZDZD");
+myHeaders.append("Authorization", "Bearer EAAHpWJgc9ysBANL3ZACw40Rgc9R9UEnSYC9wzPmo4m0ZAUZBEJSkAbdZCCdxCaDt4LqZAecJSTrXVwMDOltEv3cIDU6GTTLLZBxTHOSaAMNnoHZArPlyusZBrtZCjSqZC0r3bXCtWoqnofgOPSTpjGmT4ZA5w9rLFVBsqDml1uyWaAbuAL0svWf5LppFNypQPQQn3xsyQqhJ5dicwZDZD");
 
 var raw = JSON.stringify({
   "messaging_product": "whatsapp",
   "from": "919766289013",
-  "to": "918010669013",
+  "to": `91${number}`,
   "type": "template",
   "template": {
     "name": "hello_world",
@@ -720,7 +720,6 @@ fetch("https://graph.facebook.com/v16.0/115687568138953/messages", requestOption
 sendApi()
 
 
-  //getUrl()
 
 
    
@@ -728,7 +727,7 @@ sendApi()
   const food=[]
   data.map((x)=>{
 
- 
+   const name= document.querySelector('#customerName')
     var search9=data.find((O)=> O.kot ===  x.kot);
   search9.number=finaldata
 food.push(search9.orderedFood)
@@ -739,8 +738,8 @@ food.push(search9.orderedFood)
 
 const month=data[0].month
 const minutes=x.min
-    const billData={
-      name:n.value,
+    var billData={
+      name:name.value,
       number:number,
       table:data[0].table,
 hours:data[0].hours,
@@ -764,14 +763,14 @@ month:month,
       
       `,
      }
-     none()
+      none()
 
 
    
-// const baseUrll='/bill';
-// post(billData,baseUrll)    
-// const baseUrl='/delete'
-// post(search9,baseUrl)
+    const baseUrll='/bill';
+    post(billData,baseUrll)    
+    const baseUrl='/delete'
+    post(search9,baseUrl)
 
 })   
 

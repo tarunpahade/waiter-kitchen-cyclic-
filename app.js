@@ -218,27 +218,18 @@ if(result===0 || result<200){
 app.post('/bill',async(req,res)=>{
   
   const { pp } =req.body;
-  console.log(pp);
+ 
 
   const name=pp.name
 const table=pp.table  
 const orderedItems=pp.orders[0]
-
 const year=pp.year
-const week=pp.week
 const todayDate=pp.date
 const number=pp.number
 const status=pp.status
 const hours=pp.hours
 const month=pp.month
 
-
-const user= await  bill.findOne({table})
-
-  
-console.log( user === null)
-//if there is no previous raw material alredy in database
- if (user==null) {
   const data=new bill({
     name:name,
   month:month,
@@ -248,9 +239,8 @@ hours:hours,
 year:year,
 number:number,
 kot:pp.kot,
-
-    orderedFood:orderedItems,
-    status:status
+orderedFood:orderedItems,
+status:status
 })
 
  data.save(function (err, book) {
@@ -258,24 +248,17 @@ kot:pp.kot,
 
   
 });
-
- }else{
-  bill.find({table}, { push: { orderedFood: orderedItems }}, { new: true }, function (err, article) {
-    if (err) { console.log(err+'error in billing')}else{
-console.log(article);
-    
-   }
   });
 
  
- }
+ 
 
 
 
 
 
 
-})
+
 
 app.get('/waiter',(req,res)=>{
   res.sendFile(__dirname+'/public/waiter/waiter.html')
@@ -484,7 +467,7 @@ app.get('/bill',(req,res)=>{
   app.post('/delete',(req,res)=>{
   console.log(req.body);
   const { pp }=req.body
-  console.log(pp);
+ 
   order.deleteOne({_id:pp._id}).then((err,book)=>{
     if(err){console.log(err);}else{console.log();}
     

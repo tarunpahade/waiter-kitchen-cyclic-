@@ -13,9 +13,7 @@
     <script>
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization",
-            "Bearer EAAHpWJgc9ysBAHFMrspVbblT3bTqBltJs2HiE7uSLYukKvuXV6AtFIvCXS6wZAkLmuZAB8ZCD4m9e09gAZA4DhGGuNTucS9B3dm4M13KkJPT6qp0u0grhZA3wwja6cG0MAZCFkCU4hfVBvtChdfMhGiVXVYF5UBbxHOB0WZAHq2OMZAYYscIYHj8OMDgROMMDD3aqODVRfhAegZDZD"
-            );
+        myHeaders.append("Authorization", "Bearer ");
         var raw = JSON.stringify({
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -25,24 +23,22 @@
             "template": {
                 "name": "billing_info",
                 "language": {
-                    "code": "language-and-locale-code"
+                    "code": "en"
                 },
                 "components": [{
                     "type": "header",
                     "parameters": [{
                         "type": "image",
                         "image": {
-                            "image_url": "https://images.unsplash.com/photo-1521747116042-5a810fda9664"
+                            "link": "https://images.unsplash.com/photo-1521747116042-5a810fda9664"
                         }
                     }]
                 }, {
+                    "type": "body",
+                }, {
                     "type": "button",
-                    "sub_type": "call_to_action",
-                    "index": "0",
-                    "parameters": [{
-                        "type": "call_to_action",
-                        "uri": "https://images.unsplash.com/photo-1521747116042-5a810fda9664"
-                    }]
+                    "sub_type": "url",
+                    "index": "1"
                 }],
             }
         })
@@ -58,3 +54,8 @@
 </body>
 
 </html>
+<!-- "parameters": [{
+    "type": "text",
+    "text": "https://images.unsplash.com/photo-1521747116042-5a810fda9664",
+}]
+"link": "https://images.unsplash.com/photo-1521747116042-5a810fda9664", -->
