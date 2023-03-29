@@ -1,3 +1,31 @@
+@media only screen and (max-width:405px) {
+    label{
+      font-size: 16;
+    }
+    .remove{
+        font-size: 14;
+    }
+      .form-control,button{
+        font-size: 12px;
+      }
+      .table th, .table td {
+        border-color: #f0f1f5;
+        padding: 7px 5px;
+        font-size: 17;
+    }
+    .buttondiv button {
+        margin: 0 0.5em;
+        height: 1.9em
+        
+    }
+    i{
+        font-size: 15;
+    }
+    
+        
+        }
+
+
 #sms{
     font-size: 1em;
     padding: 0.2em 0.9em;
@@ -140,7 +168,7 @@ nav {
    
 }
 
-.table {
+.table-click {
     padding: 0.5em 1em;
     border: solid 1px black;
     margin: 0.5em;
@@ -160,19 +188,17 @@ h2{
     background: WHITE;
     FONT-WEIGHT: 550;
     PADDING: 15PX;
-    overflow: auto;
     width: 80%;
     display: flex;
     justify-content: space-around;
     flex-direction: column;
-
+    
+    overflow-y: scroll;
 
 }
 tr,
 td {
-    border: 1px solid;
-    color: #2f4cdd;
-    padding: 10px;
+  
 }
 .generateBill h3{
     color: #3d4465;
@@ -236,21 +262,99 @@ h3{
     padding-top: 1.5em;
 }
 
-@media only screen and (max-width: 600px) {
-    .buttondiv button{
-        margin: 1 18;
+table{
+vertical-align: middle;
+border-color: #f0f1f5;
+caption-side: bottom;
+border-collapse: collapse;
+color: #000 !important;
+background: aliceblue;
+max-height: 382;
+overflow-y: scroll;
+margin-top: 8em;
+}
+
+thead, tbody, tfoot, tr, td, th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+}
+.table th, .table td {
+    border-color: #f0f1f5;
+    padding: 10px 7px;
+}
+.table tbody tr td {
+    vertical-align: middle;
+    border-color: #f0f1f5;
+    font-weight: 590;
+}
+table{
+    height: 242;
+    width: fit-content;
+    display: block;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control.solid {
+    background-color: #f1f1f1;
+    color: #000;
+    margin-top: 8px;
+    font-weight: 500;
+    font-size: 16px;
+}
+@media only screen and (max-width: 1199px){
+.form-control {
+    height: 41px;
+}
+
+}
+.form-control {
+    background: #fff;
+    border: 1px solid #f0f1f5;
+    color: #6e6e6e;
+    height: 38px;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #7e7e7e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #f0f1f5;
+    appearance: none;
+    border-radius: 0.75rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+input, button, select, optgroup, textarea {
+   
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+label{
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 700px) {
+     button{
+        font-size: 14.5;
     }
 
-    input{
-       margin-top: 0;
-       margin-bottom: 0;
-
-        padding: 8px;
-    margin: 7px;
-    width: 110;
+   
+    .card{
+        display: none;
+        height: 70%;
+        width: 100%;
+    position: absolute;
     }
     .generateBill{
-        height: 70%;
+   
         position: absolute;
         width: 100%;
         display: none;
@@ -266,7 +370,7 @@ h3{
     #cross{
         position: absolute;
         right: 15%;
-        top: 15%;
+        top: 7%;
     }
     button{
         padding: 2px 7px;
@@ -282,7 +386,7 @@ h3{
     #ordertype{
         display: block;
     }
-    .table{
+    .table-click{
         width: inherit;
         height: 100;
     }
@@ -290,7 +394,17 @@ h3{
 
         margin-top: 4em;
     } 
-
+table{
+    margin-top: 0em;
+}
+}
+.align-items-center {
+    align-items: center !important;
 }
 
-
+.form-group{
+ font-size: 14;
+}
+.flex{
+    display: flex;
+}

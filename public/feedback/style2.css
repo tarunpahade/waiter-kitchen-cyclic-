@@ -9,12 +9,12 @@
 /* component */
 
 .star-rating {
-    border:solid 1px #ccc;
+    
     display:flex;
     flex-direction: row-reverse;
     font-size:1.5em;
     justify-content:space-around;
-    padding:0 .2em;
+    padding:0 .3em;
     text-align:center;
     width:5em;
   }
@@ -32,10 +32,14 @@
     /* color:#f90; */
   }
   
-  .star-rating label:hover,
-  .star-rating label:hover ~ label {
-    /* color:#fc0; */
-  }
+
   .checked{
     color:#fc0;
   }
+
+  .star-rating label:hover,
+  .star-rating label:hover ~ label,
+  .star-rating input:checked ~ label {
+    color: gold;
+  }
+  

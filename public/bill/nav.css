@@ -268,9 +268,4 @@ color: #000;
   .line{
     text-decoration: line-through;
   }
-  @media only screen and (max-width:346px) {
-  .table{
-    background-color: red;
-  }
-    
-    }
+ 

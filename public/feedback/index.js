@@ -2,31 +2,33 @@ const lala = document.querySelector('.lala')
 const url = new URL(window.location.href)
 const name = url.searchParams.get('name')
 console.log(name);
-const nameDiv = document.querySelector("body > h1 > div").innerHTML = name
+const nameDiv = document.querySelector(".name").innerHTML = name
+document.querySelector(".name2").innerHTML = name
 const food = url.searchParams.get('orders')
 const arrayOfFood = food.split(',')
 console.log(arrayOfFood);
 const baseUrl1 = '/send'
 getinfos()
 async function getinfos() {
-    const res = await fetch(baseUrl1, {
-        method: 'GET',
+  const res = await fetch(baseUrl1, {
+    method: 'GET',
+  })
+  const data = await res.json()
+  const food = []
+  data.map((a) => {
+    arrayOfFood.map((z) => {
+      if (a.item.replace(/ +/g, "") === z) {
+        console.log(a);
+        generatecards([a])
+      }
     })
-    const data = await res.json()
-    const food = []
-    data.map((a) => {
-        arrayOfFood.map((z) => {
-            if (a.item.replace(/ +/g, "" ) === z) {
-                console.log(a);
-                generatecards([a])
-    }})
-        })
-    }
+  })
+}
 
 let generatecards = (food) => {
-    lala.innerHTML += food.map((x) => {
-        let id = x.item;
-        return `
+  lala.innerHTML += food.map((x) => {
+    let id = x.item;
+    return `
 
 
 <div class="card">
@@ -49,63 +51,70 @@ let generatecards = (food) => {
 
 </div>
 </div>`
-    }).join('')
+  }).join('')
 }
 
 function changecolor(event) {
-    console.log(event.target.id)
-    const id = event.target.id
-    const ele = document.getElementById(id)
-    console.log(ele);
-   const local= JSON.parse(localStorage.getItem('review')) || []
-    // ele.style.color = 'red'
-    ele.classList.toggle('checked')
- const data=id.replace(/([A-Z])/g, ' $1').trim()
-console.log(ele.dataset.id);
-const gaga=
-    {
-        
-'name':ele.dataset.id,
-        'rating'  :  data.substring(0,5)
-}
-console.log(local);
-local.push(gaga)
-console.log(local);
+  console.log(event.target.id)
+  const id = event.target.id
+
+
+  const ele = document.getElementById(id)
+  console.log(ele);
+  const local = JSON.parse(localStorage.getItem('review')) || []
+  // ele.style.color = 'red'
+  ele.classList.toggle('checked')
+  const data = id.replace(/([A-Z])/g, ' $1').trim()
+  console.log(ele.dataset.id);
+  const gaga = {
+
+    'name': ele.dataset.id,
+    'rating': data.substring(0, 5)
+  }
+  console.log(local);
+  local.push(gaga)
+  console.log(local);
   localStorage.setItem('review', JSON.stringify(local));
 }
 
-async function post(){
-    const local= JSON.parse(localStorage.getItem('review'))
-    const description=document.querySelector("#description").value
-    console.log(description);
-    const url = new URL(window.location.href)
-const name = url.searchParams.get('name')
-const number=url.searchParams.get('number')
-    const data={
-       rating:local,
-       description,
-       name,
-       number
+async function post() {
+  const local = JSON.parse(localStorage.getItem('review'))
+  const description = document.querySelector("#description").value
+  console.log(description);
+  const url = new URL(window.location.href)
+  const name = url.searchParams.get('name')
+  const number = url.searchParams.get('number')
+  const data = {
+    rating: local,
+    description,
+    name,
+    number
+  }
+  localStorage.setItem('review', '');
+  document.querySelector('.intro').style.display = 'none'
+  document.querySelector('.thank-you').style.display = 'block'
+  const baseUrl = '/feedback'
+  const res = await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({
+        pp: data
+      }),
+
     }
-    const baseUrl='/feedback'
-    const res= await fetch(baseUrl,
-        {
-          method:"POST",
-        headers: {
-    "Content-Type": 'application/json'
-        },
-        body: JSON.stringify({
-          pp:data}),
-   
-      }
-    
-        
-        ).then(response => {
-          if (!response.ok) { 
-            console.log('err');                                 // ***
-          }  else {
-            console.log('sent');
-          }                                                  // ***
-          // ...use `response.json`, `response.text`, etc. here
-        })
+
+
+  ).then(response => {
+    if (!response.ok) {
+      console.log('err'); // ***
+    } else {
+      console.log('sent');
+
+    } // ***
+    // ...use `response.json`, `response.text`, etc. here
+  })
+
+
 }

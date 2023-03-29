@@ -1,5 +1,8 @@
 * {
     box-sizing: border-box;
+    width: 100%;
+   
+    color: #00203FFF;
 }
 
 body {
@@ -7,6 +10,7 @@ body {
     font-family: "Raleway";
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
+    margin: 0.7em;
 }
 .con{
     color: #fff;
@@ -60,7 +64,7 @@ body .card .description {
     padding: 4px 0px 1px 4px;
     float: left;
     width: 85%;
-    border-left: 2px solid #efefef;
+
 }
 
 body .card .description h2 {
@@ -154,7 +158,9 @@ a{
     right: -10px;
     width: min-content;
 }
-
+.thank-you{
+    display:none;
+}
 
 .btn{
 position: relative;
@@ -171,4 +177,22 @@ margin-left: 13;
   label{
     FONT-SIZE: 0.79EM;
     PADDING: 2px;
+  }
+  .submit{
+    width: 60%;
+    margin: auto;
+    display: block;
+    COLOR: WHITE;
+    margin-top: 1em;
+    BACKGROUND: #00203FFF;
+  }
+  textarea{
+    width: 80%;
+    display: block;
+    padding: 10px;
+    /* BACKGROUND: #00203FFF; */
+    margin: auto;
+    COLOR: WHITE;
+    FONT-SIZE: 13PX;
+    FONT-WEIGHT: 800;
   }

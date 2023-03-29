@@ -265,7 +265,9 @@ h4{
     }
 }
 
-
+.input-group{
+    display: flex;
+}
 span{
     color: #000;
     padding: 0 10;

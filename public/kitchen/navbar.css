@@ -6,6 +6,7 @@
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
   }
   
   body {
@@ -267,4 +268,7 @@ color: #000;
   }
   .line{
     text-decoration: line-through;
+  }
+  h3{
+    color: #fff;
   }
