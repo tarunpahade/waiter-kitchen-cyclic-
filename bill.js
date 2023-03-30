@@ -826,7 +826,7 @@ const printbill = (data) => {
           var myHeaders = new Headers();
           myHeaders.append("Content-Type", "application/json");
           myHeaders.append("Authorization",
-            "Bearer EAAHpWJgc9ysBAD2ZC16Q0Bhi0ue0Rhy5MZB0ZBGA4RkxUsY6mdofttZAHELMz5ualQwGxMIBzMV0E7zLG113Mv9MZAmNeCnbQwaLuPIVdYKN0KMtZC91Fwm87SsHAPIWK1ubdozkTEEX5Yx7IbeZALdImP7x0k1yMMhYYupoSZCLxGmxonMbTEkBgT7Ez0HZAGY2DSZCpRgxHZBZAAZDZD"
+            "Bearer EAAHpWJgc9ysBAI85N5KI7a4Xyh86IUe5UgatqtgZCp6XQ1y8qsEuPaeqW0cEOsrkIqMAC8XgHvmOOMvUDOXTtODLOayDZCYl2p0uA7tFP67RFXhvXGUPmI9ieXCJOMFhVlbWwCcZAfZCKoVVQqPiAitUlaRkGRtKAYz7cVvscZCkpSkiZAiOb6lLwgiVB6bAFXhBGazQbD3AZDZD"
           );
           console.log(myHeaders);
           var raw = JSON.stringify({

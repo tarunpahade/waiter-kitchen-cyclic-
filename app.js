@@ -663,70 +663,129 @@ app.post('/number', async (req, res) => {
   const totalcost = pp.totalcost
   const feedback = pp.feedback
 
-  var data = JSON.stringify({
-    "messaging_product": "whatsapp",
-    "recipient_type": "individual",
+  // var data = JSON.stringify({
+  //   "messaging_product": "whatsapp",
+  //   "recipient_type": "individual",
+  //   "to": `${number}`,
+  //   "type": "template",
+  //   "template": {
+  //     "name": "billing_info",
+  //     "language": {
+  //       "code": "en"
+  //     },
+  //     "components": [{
+  //       "type": "header",
+  //       "parameters": [{
+  //         "type": "image",
+  //         "image": {
+  //           "link": image
+  //         }
+  //       }]
+  //     }, {
+  //       "type": "body",
+  //       "parameters": [{
+  //         "type": "text",
+  //         "text": name
+  //       }, {
+  //         "type": "text",
+  //         "text": "XYZ restraunt"
+  //       }, {
+  //         "type": "text",
+  //         "text": totalcost
+  //       }, {
+  //         "type": "text",
+  //         "text": "XYZ"
+  //       }]
+  //     }, {
+  //       "type": "button",
+  //       "sub_type": "url",
+  //       "index": "0",
+  //       "parameters": [{
+  //         "type": "text",
+  //         "text": feedback
+  //       }]
+  //     }],
+  //   }
+  // })
 
-    "to": `${number}`,
-    "type": "template",
-    "template": {
-      "name": "billing_info",
-      "language": {
-        "code": "en"
-      },
-      "components": [{
-        "type": "header",
-        "parameters": [{
-          "type": "image",
-          "image": {
-            "link": `${image}`
-          }
-        }]
-      }, {
-        "type": "body",
-        "parameters": [{
-          "type": "text",
-          "text": `${name}`
+
+  // ;
+  // let config = {
+  //   'method': 'POST',
+  //   maxBodyLength: Infinity,
+  //   'redirect': 'follow',
+  //   'url': 'https://graph.facebook.com/v13.0/115687568138953/messages',
+  //   'headers': {
+  //     "Content-Type": "application/json",
+  //     "Authorization": `Bearer ${process.env.BEARER_TOKEN}`,
+  //   },
+  //   'body': data,
+  // };
+
+
+  // axios(config, function (error, response) {
+  //   console.log(response.data)
+
+  // })
+
+  var unirest = require('unirest');
+  var req = unirest('POST', 'https://graph.facebook.com/v16.0/115687568138953/messages')
+    .headers({
+      "Content-Type": "application/json",
+      maxBodyLength: Infinity,
+      "Authorization": `Bearer ${process.env.BEARER_TOKEN}`,
+    })
+    .send(JSON.stringify({
+      "messaging_product": "whatsapp",
+      "recipient_type": "individual",
+      "to": `${number}`,
+      "type": "template",
+      "template": {
+        "name": "billing_info",
+        "language": {
+          "code": "en"
+        },
+        "components": [{
+          "type": "header",
+          "parameters": [{
+            "type": "image",
+            "image": {
+              "link": image
+            }
+          }]
         }, {
-          "type": "text",
-          "text": "XYZ restraunt"
+          "type": "body",
+          "parameters": [{
+            "type": "text",
+            "text": name
+          }, {
+            "type": "text",
+            "text": "XYZ restraunt"
+          }, {
+            "type": "text",
+            "text": totalcost
+          }, {
+            "type": "text",
+            "text": "XYZ"
+          }]
         }, {
-          "type": "text",
-          "text": `${totalcost}`
-        }, {
-          "type": "text",
-          "text": "XYZ"
-        }]
-      }, {
-        "type": "button",
-        "sub_type": "url",
-        "index": "0",
-        "parameters": [{
-          "type": "text",
-          "text": `${feedback}`
-        }]
-      }],
-    }
-  })
-  var myHeaders = {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${process.env.BEARER_TOKEN}`
-  };
+          "type": "button",
+          "sub_type": "url",
+          "index": "0",
+          "parameters": [{
+            "type": "text",
+            "text": feedback
+          }]
+        }],
+      }
+    }))
+    .end(function (res) {
+      if (res.error) {
+        console.log(res.error);
+      }
+      console.log(res.raw_body);
+    });
 
-  ;
-  let config = {
-    'method': 'post',
-    'redirect': 'follow',
-    'url': 'https://graph.facebook.com/v16.0/115687568138953/messages',
-    'headers': myHeaders,
-    'body': data,
-  };
-
-
-  request(config, function (error, response) {
-    if (error) throw new Error(error);
-    console.log(response);
-  })
 
 })
 //to send bill through whatsapp
