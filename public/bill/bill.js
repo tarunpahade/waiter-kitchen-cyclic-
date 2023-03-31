@@ -826,7 +826,7 @@ const printbill = (data) => {
           var myHeaders = new Headers();
           myHeaders.append("Content-Type", "application/json");
           myHeaders.append("Authorization",
-            "Bearer EAAHpWJgc9ysBAI85N5KI7a4Xyh86IUe5UgatqtgZCp6XQ1y8qsEuPaeqW0cEOsrkIqMAC8XgHvmOOMvUDOXTtODLOayDZCYl2p0uA7tFP67RFXhvXGUPmI9ieXCJOMFhVlbWwCcZAfZCKoVVQqPiAitUlaRkGRtKAYz7cVvscZCkpSkiZAiOb6lLwgiVB6bAFXhBGazQbD3AZDZD"
+            `Bearer ${process.env.facebook}`
           );
           console.log(myHeaders);
           var raw = JSON.stringify({

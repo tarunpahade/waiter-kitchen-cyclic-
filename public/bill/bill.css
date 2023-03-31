@@ -196,10 +196,10 @@ h2{
     overflow-y: scroll;
 
 }
-tr,
+/* tr,
 td {
   
-}
+} */
 .generateBill h3{
     color: #3d4465;
 }
