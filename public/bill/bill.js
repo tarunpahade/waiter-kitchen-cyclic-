@@ -729,7 +729,9 @@ const printbill = (data) => {
       discountedamt = totalcost - discount
       discAmt = discount
     }
-    totalAmt.innerText = Math.round(discountedamt + discountedamt / 100 * 2.5 + discountedamt / 100 * 2.5)
+    var finalAMT = Math.round(discountedamt + discountedamt / 100 * 2.5 + discountedamt / 100 * 2.5)
+
+    totalAmt.innerText = finalAMT
     const tr3 = document.createElement('tr')
     const tddiscount = document.createElement('td')
     tddiscount.innerText = 'Less Discount'
@@ -795,7 +797,7 @@ const printbill = (data) => {
             return Promise.reject(res.status);
           }
         })
-        .then((data) => {
+        .then(async (data) => {
           // Image URL is available here
           console.log(data);
 
@@ -808,9 +810,16 @@ const printbill = (data) => {
 
           console.log(url.search)
           console.log(data.url)
+          const res = await fetch('/fbtoken', {
+              method: 'GET',
+            }
+
+          )
 
 
+          const bearertoken = await res.json()
 
+          console.log(bearertoken)
 
           const postdata = {
             number,
@@ -821,12 +830,13 @@ const printbill = (data) => {
 
 
           }
+          // post(postdata, '/number')
           console.log(postdata);
 
           var myHeaders = new Headers();
           myHeaders.append("Content-Type", "application/json");
           myHeaders.append("Authorization",
-            `Bearer ${process.env.facebook}`
+            `Bearer ${bearertoken}`
           );
           console.log(myHeaders);
           var raw = JSON.stringify({
@@ -858,7 +868,7 @@ const printbill = (data) => {
                   "text": "XYZ restraunt"
                 }, {
                   "type": "text",
-                  "text": `${totalcost}`
+                  "text": `${finalAMT}`
                 }, {
                   "type": "text",
                   "text": "XYZ"
@@ -964,10 +974,10 @@ const printbill = (data) => {
 
 
 
-      // const baseUrll = '/bill';
-      // post(billData, baseUrll)
-      // const baseUrl = '/delete'
-      // post(search9, baseUrl)
+      const baseUrll = '/bill';
+      post(billData, baseUrll)
+      const baseUrl = '/delete'
+      post(search9, baseUrl)
 
     })
 

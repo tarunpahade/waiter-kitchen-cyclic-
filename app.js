@@ -650,144 +650,151 @@ app.get('/feedback', (req, res) => {
   res.sendFile(__dirname + '/public/feedback/index.html')
 })
 
-//to send bill through whatsapp
-app.post('/number', async (req, res) => {
-  var request = require('request');
-  const {
-    pp
-  } = req.body
-  console.log(pp)
-  const number = pp.phone
-  const image = pp.image
-  const name = pp.name
-  const totalcost = pp.totalcost
-  const feedback = pp.feedback
-
-  // var data = JSON.stringify({
-  //   "messaging_product": "whatsapp",
-  //   "recipient_type": "individual",
-  //   "to": `${number}`,
-  //   "type": "template",
-  //   "template": {
-  //     "name": "billing_info",
-  //     "language": {
-  //       "code": "en"
-  //     },
-  //     "components": [{
-  //       "type": "header",
-  //       "parameters": [{
-  //         "type": "image",
-  //         "image": {
-  //           "link": image
-  //         }
-  //       }]
-  //     }, {
-  //       "type": "body",
-  //       "parameters": [{
-  //         "type": "text",
-  //         "text": name
-  //       }, {
-  //         "type": "text",
-  //         "text": "XYZ restraunt"
-  //       }, {
-  //         "type": "text",
-  //         "text": totalcost
-  //       }, {
-  //         "type": "text",
-  //         "text": "XYZ"
-  //       }]
-  //     }, {
-  //       "type": "button",
-  //       "sub_type": "url",
-  //       "index": "0",
-  //       "parameters": [{
-  //         "type": "text",
-  //         "text": feedback
-  //       }]
-  //     }],
-  //   }
-  // })
+app.get('/fbtoken', (req, res) => {
 
 
-  // ;
-  // let config = {
-  //   'method': 'POST',
-  //   maxBodyLength: Infinity,
-  //   'redirect': 'follow',
-  //   'url': 'https://graph.facebook.com/v13.0/115687568138953/messages',
-  //   'headers': {
-  //     "Content-Type": "application/json",
-  //     "Authorization": `Bearer ${process.env.BEARER_TOKEN}`,
-  //   },
-  //   'body': data,
-  // };
-
-
-  // axios(config, function (error, response) {
-  //   console.log(response.data)
-
-  // })
-
-  var unirest = require('unirest');
-  var req = unirest('POST', 'https://graph.facebook.com/v16.0/115687568138953/messages')
-    .headers({
-      "Content-Type": "application/json",
-      maxBodyLength: Infinity,
-      "Authorization": `Bearer ${process.env.BEARER_TOKEN}`,
-    })
-    .send(JSON.stringify({
-      "messaging_product": "whatsapp",
-      "recipient_type": "individual",
-      "to": `${number}`,
-      "type": "template",
-      "template": {
-        "name": "billing_info",
-        "language": {
-          "code": "en"
-        },
-        "components": [{
-          "type": "header",
-          "parameters": [{
-            "type": "image",
-            "image": {
-              "link": image
-            }
-          }]
-        }, {
-          "type": "body",
-          "parameters": [{
-            "type": "text",
-            "text": name
-          }, {
-            "type": "text",
-            "text": "XYZ restraunt"
-          }, {
-            "type": "text",
-            "text": totalcost
-          }, {
-            "type": "text",
-            "text": "XYZ"
-          }]
-        }, {
-          "type": "button",
-          "sub_type": "url",
-          "index": "0",
-          "parameters": [{
-            "type": "text",
-            "text": feedback
-          }]
-        }],
-      }
-    }))
-    .end(function (res) {
-      if (res.error) {
-        console.log(res.error);
-      }
-      console.log(res.raw_body);
-    });
-
-
+  res.send(JSON.stringify(process.env.facebook))
 })
+
+
+// app.post('/number', async (req, res) => {
+//   var request = require('request');
+//   const {
+//     pp
+//   } = req.body
+//   console.log(pp)
+//   const number = pp.phone
+//   const image = pp.image
+//   const name = pp.name
+//   const totalcost = pp.totalcost
+//   const feedback = pp.feedback
+
+
+//   var request = require('request');
+
+
+//   ;
+//   let config = {
+//     'method': 'POST',
+//     'redirect': 'follow',
+//     'url': 'https://graph.facebook.com/v13.0/115687568138953/messages',
+//     'headers': {
+//       "Content-Type": "application/json",
+//       "Authorization": `Bearer ${process.env.facebook}`,
+//     },
+//     "messaging_product": "whatsapp",
+//     'body': JSON.stringify({
+//       "messaging_product": "whatsapp",
+//       "recipient_type": "individual",
+//       "to": `91${number}`,
+//       "type": "template",
+//       "template": {
+//         "name": "billing_info",
+//         "language": {
+//           "code": "en"
+//         },
+//         "components": [{
+//           "type": "header",
+//           "parameters": [{
+//             "type": "image",
+//             "image": {
+//               "link": image
+//             }
+//           }]
+//         }, {
+//           "type": "body",
+//           "parameters": [{
+//             "type": "text",
+//             "text": name
+//           }, {
+//             "type": "text",
+//             "text": "XYZ restraunt"
+//           }, {
+//             "type": "text",
+//             "text": totalcost
+//           }, {
+//             "type": "text",
+//             "text": "XYZ"
+//           }]
+//         }, {
+//           "type": "button",
+//           "sub_type": "url",
+//           "index": "0",
+//           "parameters": [{
+//             "type": "text",
+//             "text": feedback
+//           }]
+//         }],
+//       }
+//     }),
+//   };
+
+
+//   request(config, function (error, response) {
+//     console.log(response.body)
+
+//   })
+
+//   var unirest = require('unirest');
+//   var req = unirest('POST', 'https://graph.facebook.com/v16.0/115687568138953/messages')
+//     .headers({
+//       "Content-Type": "application/json",
+//       "Authorization": `Bearer ${process.env.facebook}`,
+//     })
+//     .send(JSON.stringify({
+//       "messaging_product": "whatsapp",
+//       "recipient_type": "individual",
+//       "to": `${number}`,
+//       "type": "template",
+//       "template": {
+//         "name": "billing_info",
+//         "language": {
+//           "code": "en"
+//         },
+//       },
+//       "components": [{
+//         "type": "header",
+//         "parameters": [{
+//           "type": "image",
+//           "image": {
+//             "link": image
+//           }
+//         }]
+//       }, {
+//         "type": "body",
+//         "parameters": [{
+//           "type": "text",
+//           "text": name
+//         }, {
+//           "type": "text",
+//           "text": "XYZ restraunt"
+//         }, {
+//           "type": "text",
+//           "text": totalcost
+//         }, {
+//           "type": "text",
+//           "text": "XYZ"
+//         }]
+//       }, {
+//         "type": "button",
+//         "sub_type": "url",
+//         "index": "0",
+//         "parameters": [{
+//           "type": "text",
+//           "text": feedback
+//         }]
+//       }],
+
+//     }))
+//     .end(function (res) {
+//       if (res.error) {
+//         console.log(res.error);
+//       }
+//       console.log(res.body);
+//     });
+
+
+// })
 //to send bill through whatsapp
 app.post('/sms', (req, res) => {
   const {
@@ -893,9 +900,12 @@ app.post('/sms', (req, res) => {
 // });
 
 
-
-
-
+const apikey = process.env.facebook
+// hello.mjs -- or the extension could be just `.js`
+async function hello(text) {
+  await console.log(text);
+}
+module.exports = apikey
 ////////////         End Billing         ////////////
 
 
