@@ -708,27 +708,38 @@ app.post("/webhook", (req, res) => {
       let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
       console.log(from, msg_body);
       console.log("https://graph.facebook.com/v16.0/" + phone_number_id + "/messages?access_token=" + process.env.TOKEN);
-      // axios({
-      //     method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-      //     url: "https://graph.facebook.com/v16.0/" + phone_number_id + "/messages?access_token=" + process.env.TOKEN,
-      //     data: {
-      //       messaging_product: "whatsapp",
-      //       from: '919766289013',
 
-      //       to: from,
-      //       text: {
-      //         body: "your message is : " + msg_body
-      //       },
-      //     },
-      //     headers: {
-      //       "Content-Type": "application/json"
-      //     },
-      //   }).then(function (response) {
-      //     console.log(response.status());
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });;
+      const axios = require('axios');
+
+      let data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": "918010669013",
+        "type": "text",
+        "text": {
+          "preview_url": false,
+          "body": "Thankyou for your response we will get back as soon as possible"
+        }
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://graph.facebook.com/v16.0/115687568138953/messages',
+        headers: {
+          'Authorization': `Bearer ${process.env.facebook}`,
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       console.log('succesfully sent');
     }
     res.send('sent');
