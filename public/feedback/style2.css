@@ -28,9 +28,7 @@
     cursor:pointer;
   }
   
-  .star-rating :checked ~ label {
-    /* color:#f90; */
-  }
+  
   
 
   .checked{

@@ -657,144 +657,7 @@ app.get('/fbtoken', (req, res) => {
 })
 
 
-// app.post('/number', async (req, res) => {
-//   var request = require('request');
-//   const {
-//     pp
-//   } = req.body
-//   console.log(pp)
-//   const number = pp.phone
-//   const image = pp.image
-//   const name = pp.name
-//   const totalcost = pp.totalcost
-//   const feedback = pp.feedback
 
-
-//   var request = require('request');
-
-
-//   ;
-//   let config = {
-//     'method': 'POST',
-//     'redirect': 'follow',
-//     'url': 'https://graph.facebook.com/v13.0/115687568138953/messages',
-//     'headers': {
-//       "Content-Type": "application/json",
-//       "Authorization": `Bearer ${process.env.facebook}`,
-//     },
-//     "messaging_product": "whatsapp",
-//     'body': JSON.stringify({
-//       "messaging_product": "whatsapp",
-//       "recipient_type": "individual",
-//       "to": `91${number}`,
-//       "type": "template",
-//       "template": {
-//         "name": "billing_info",
-//         "language": {
-//           "code": "en"
-//         },
-//         "components": [{
-//           "type": "header",
-//           "parameters": [{
-//             "type": "image",
-//             "image": {
-//               "link": image
-//             }
-//           }]
-//         }, {
-//           "type": "body",
-//           "parameters": [{
-//             "type": "text",
-//             "text": name
-//           }, {
-//             "type": "text",
-//             "text": "XYZ restraunt"
-//           }, {
-//             "type": "text",
-//             "text": totalcost
-//           }, {
-//             "type": "text",
-//             "text": "XYZ"
-//           }]
-//         }, {
-//           "type": "button",
-//           "sub_type": "url",
-//           "index": "0",
-//           "parameters": [{
-//             "type": "text",
-//             "text": feedback
-//           }]
-//         }],
-//       }
-//     }),
-//   };
-
-
-//   request(config, function (error, response) {
-//     console.log(response.body)
-
-//   })
-
-//   var unirest = require('unirest');
-//   var req = unirest('POST', 'https://graph.facebook.com/v16.0/115687568138953/messages')
-//     .headers({
-//       "Content-Type": "application/json",
-//       "Authorization": `Bearer ${process.env.facebook}`,
-//     })
-//     .send(JSON.stringify({
-//       "messaging_product": "whatsapp",
-//       "recipient_type": "individual",
-//       "to": `${number}`,
-//       "type": "template",
-//       "template": {
-//         "name": "billing_info",
-//         "language": {
-//           "code": "en"
-//         },
-//       },
-//       "components": [{
-//         "type": "header",
-//         "parameters": [{
-//           "type": "image",
-//           "image": {
-//             "link": image
-//           }
-//         }]
-//       }, {
-//         "type": "body",
-//         "parameters": [{
-//           "type": "text",
-//           "text": name
-//         }, {
-//           "type": "text",
-//           "text": "XYZ restraunt"
-//         }, {
-//           "type": "text",
-//           "text": totalcost
-//         }, {
-//           "type": "text",
-//           "text": "XYZ"
-//         }]
-//       }, {
-//         "type": "button",
-//         "sub_type": "url",
-//         "index": "0",
-//         "parameters": [{
-//           "type": "text",
-//           "text": feedback
-//         }]
-//       }],
-
-//     }))
-//     .end(function (res) {
-//       if (res.error) {
-//         console.log(res.error);
-//       }
-//       console.log(res.body);
-//     });
-
-
-// })
 //to send bill through whatsapp
 app.post('/sms', (req, res) => {
   const {
@@ -821,83 +684,88 @@ app.post('/sms', (req, res) => {
 
 })
 
-// app.post("/webhook", (req, res) => {
-//   // Parse the request body from the POST
-//   let body = req.body;
+app.post("/webhook", (req, res) => {
+  // Parse the request body from the POST
+  let body = req.body;
 
-//   // Check the Incoming webhook message
-//   console.log(JSON.stringify(req.body, null, 2));
+  // Check the Incoming webhook message
+  console.log(JSON.stringify(req.body, null, 2));
 
-//   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
-//   if (req.body.object) {
-//     console.log('lvl1');
-//     if (
-//       req.body.entry &&
-//       req.body.entry[0].changes &&
-//       req.body.entry[0].changes[0] &&
-//       req.body.entry[0].changes[0].value.messages &&
-//       req.body.entry[0].changes[0].value.messages[0]
-//     ) {
-//       console.log('body is obj lvl2');
-//       let phone_number_id =
-//         req.body.entry[0].changes[0].value.metadata.phone_number_id;
-//       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
-//       let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
-//     console.log(from,msg_body);
-//     console.log("https://graph.facebook.com/v16.0/" +  phone_number_id +"/messages?access_token=" +process.env.TOKEN);  
-//     axios({
-//         method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-//         url:"https://graph.facebook.com/v16.0/" +  phone_number_id +"/messages?access_token=" +process.env.TOKEN,
-//         data: {
-//           messaging_product: "whatsapp",
-//           from:'919766289013',
+  // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
+  if (req.body.object) {
+    console.log('lvl1');
+    if (
+      req.body.entry &&
+      req.body.entry[0].changes &&
+      req.body.entry[0].changes[0] &&
+      req.body.entry[0].changes[0].value.messages &&
+      req.body.entry[0].changes[0].value.messages[0]
+    ) {
+      console.log('body is obj lvl2');
+      let phone_number_id =
+        req.body.entry[0].changes[0].value.metadata.phone_number_id;
+      let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
+      let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
+      console.log(from, msg_body);
+      console.log("https://graph.facebook.com/v16.0/" + phone_number_id + "/messages?access_token=" + process.env.TOKEN);
+      // axios({
+      //     method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+      //     url: "https://graph.facebook.com/v16.0/" + phone_number_id + "/messages?access_token=" + process.env.TOKEN,
+      //     data: {
+      //       messaging_product: "whatsapp",
+      //       from: '919766289013',
 
-//           to: from,
-//           text: { body: "your message is : "+msg_body },
-//         },
-//         headers: { "Content-Type": "application/json" },
-//       })  .then(function (response) {
-//         console.log(response.status());
-//       })
-//       .catch(function (error) {
-//         console.log(error);
-//       });;
-//       console.log('succesfully sent');
-//     }
-//     res.send('sent');
-//   } else {
-//     // Return a '404 Not Found' if event is not from a WhatsApp API
-//     res.sendStatus(404);
-//   }
-// });
+      //       to: from,
+      //       text: {
+      //         body: "your message is : " + msg_body
+      //       },
+      //     },
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     },
+      //   }).then(function (response) {
+      //     console.log(response.status());
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });;
+      console.log('succesfully sent');
+    }
+    res.send('sent');
+  } else {
+    // Return a '404 Not Found' if event is not from a WhatsApp API
+    res.sendStatus(404);
+  }
+});
 
 // // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
 // // info on verification request payload: https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests 
-// app.get("/webhook", (req, res) => {
-//   /**
-//    * UPDATE YOUR VERIFY TOKEN
-//    *This will be the Verify Token value when you set up webhook
-//   **/
-//   const verify_token = process.env.VERIFY_TOKEN;
+app.get("/webhook", (req, res) => {
+  /**
+   * UPDATE YOUR VERIFY TOKEN
+   *This will be the Verify Token value when you set up webhook
+   **/
+  const verify_token = process.env.VERIFY_TOKEN;
 
-//   // Parse params from the webhook verification request
-//   let mode = req.query["hub.mode"];
-//   let token = req.query["hub.verify_token"];
-//   let challenge = req.query["hub.challenge"];
+  // Parse params from the webhook verification request
+  let mode = req.query["hub.mode"];
+  let token = req.query["hub.verify_token"];
+  let challenge = req.query["hub.challenge"];
 
-//   // Check if a token and mode were sent
-//   if (mode && token) {
-//     // Check the mode and token sent are correct
-//     if (mode === "subscribe" && token === verify_token) {
-//       // Respond with 200 OK and challenge token from the request
-//       console.log("WEBHOOK_VERIFIED");
-//       res.status(200).send(challenge);
-//     } else {
-//       // Responds with '403 Forbidden' if verify tokens do not match
-//       res.sendStatus(403);
-//     }
-//   }
-// });
+  // Check if a token and mode were sent
+  if (mode && token) {
+    // Check the mode and token sent are correct
+    if (mode === "subscribe" && token === verify_token) {
+      // Respond with 200 OK and challenge token from the request
+      console.log("WEBHOOK_VERIFIED");
+      res.status(200).send(challenge);
+      nnoded
+    } else {
+      // Responds with '403 Forbidden' if verify tokens do not match
+      res.sendStatus(403);
+    }
+  }
+});
 
 
 const apikey = process.env.facebook
