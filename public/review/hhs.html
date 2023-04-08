@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        /* Style the heading */
+        h1 {
+            margin-top: 0;
+        }
+
+        /* Style the name in the heading */
+        .name {
+            font-weight: bold;
+            color: blue;
+        }
+
+        /* Style the card container */
+        .card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+            /* Decrease the width of the card container */
+        }
+
+        /* Style the food item name */
+        .description h4 {
+            margin-top: 0;
+        }
+
+        /* Style the star rating container */
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        /* Style the star rating icons */
+        .star-rating label {
+            font-size: 24px;
+            color: #ddd;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        /* Change the color of the star rating icons when clicked */
+        .star-rating label:hover,
+        .star-rating label:hover~label,
+        .star-rating input:checked~label {
+            color: gold;
+        }
+
+        /* Set the background color for the selected star rating */
+        .star-rating input:checked~label {
+            color: orange;
+        }
+
+        /* Style the div with class "lala" */
+        .lala {
+            overflow-x: scroll;
+            /* Add a horizontal scroll to the div */
+            white-space: nowrap;
+            /* Prevent line breaks */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>heluu <div class="name">tarun</div>
+    </h1>
+    <div class="lala">
+        <div class="card">
+            <div class="photo">
+            </div>
+            <div class="description">
+                <h4 class="name">Aloo Corn Tikki</h4>
+                <div class="buttons">
+                    <div class="star-rating">
+                        <label for="5-starsAlooCornTikki" id="5starAlooCornTikki" data-id="Aloo Corn Tikki"
+                            onclick="changecolor(event)" class="fa-regular fa-face-grin-hearts"></label>
+                        <label for="4-starsAlooCornTikki" id="4starAlooCornTikki" data-id="Aloo Corn Tikki"
+                            onclick="changecolor(event)" class="fa-regular fa-face-laugh-beam"></label>
+                        <label for="3-starsAlooCornTikki" id="3starAlooCornTikki" data-id="Aloo Corn Tikki"
+                            onclick="changecolor(event)" class="fa-regular fa-face-meh-blank"></label>
+                        <label for="2-starsAlooCornTikki" id="2starAlooCornTikki" data-id="Aloo Corn Tikki"
+                            onclick="changecolor(event)" class="fa-regular fa-face-frown"></label>
+                        <label for="1-starAlooCornTikki" id="1starAlooCornTikki" data-id="Aloo Corn Tikki"
+                            onclick="changecolor(event)" class="fa-regular fa-face-angry"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+
+</html>

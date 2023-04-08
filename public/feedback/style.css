@@ -1,12 +1,11 @@
 * {
     box-sizing: border-box;
     width: 100%;
-   
-    color: #00203FFF;
+    color: #4a3749;
 }
 
 body {
-    background: #aedaa6;
+    background:  #fff;
     font-family: "Raleway";
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
@@ -184,7 +183,7 @@ margin-left: 13;
     display: block;
     COLOR: WHITE;
     margin-top: 1em;
-    BACKGROUND: #00203FFF;
+    BACKGROUND: #4a3749;;
   }
   textarea{
     width: 80%;
@@ -196,3 +195,46 @@ margin-left: 13;
     FONT-SIZE: 13PX;
     FONT-WEIGHT: 800;
   }
+  @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* component */
+
+.star-rating {
+    
+    display:flex;
+    flex-direction: row-reverse;
+    font-size:1.5em;
+    justify-content:space-around;
+    padding:0 .3em;
+    text-align:center;
+    width:5em;
+  }
+  
+  .star-rating input {
+    display:none;
+  }
+  
+  .star-rating label {
+    /* color:#ccc; */
+    cursor:pointer;
+  }
+  
+  
+  
+
+  .checked{
+    color:#fc0;
+  }
+
+  .star-rating label:hover,
+  .star-rating label:hover ~ label,
+  .star-rating input:checked ~ label {
+    color: gold;
+  }
+  

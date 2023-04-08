@@ -1,3 +1,21 @@
+::-webkit-scrollbar {
+    width: 3px;
+display: flex;
+  }
+
+::-webkit-scrollbar-track {
+  box-shadow:inset 0 0 0px 5px #fff;
+}
+ 
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,0.2);
+}
+:root{
+	scrollbar-width: thin;
+	scrollbar-color: #e1e1e1 #fff;
+}
+
+
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 *{
   margin: 0;
@@ -41,3 +59,14 @@
     color: gold;
   }
   
+
+
+
+
+
+
+
+
+
+
+
