@@ -768,7 +768,15 @@ const printbill = (data) => {
 
     // Find the HTML element you want to capture as an image
     const element = document.querySelector('#bill' + data[0].table);
+    const url = new URL(window.location.href)
+    url.pathname = '/feedback'
 
+    url.searchParams.set('name', n.value)
+    url.searchParams.set('orders', foodlist)
+    url.searchParams.set('number', number)
+
+    console.log(url.search)
+    console.log(url)
 
     async function sendApi() {
       console.log('hohoh');
@@ -890,14 +898,14 @@ const printbill = (data) => {
             body: raw,
             redirect: 'follow'
           };
-          fetch("https://graph.facebook.com/v16.0/115687568138953/messages", requestOptions).then(response => response
-            .text()).then(result => console.log(result + 'ther')).catch(error => console.log('error', error));
+          // fetch("https://graph.facebook.com/v16.0/115687568138953/messages", requestOptions).then(response => response
+          //   .text()).then(result => console.log(result + 'ther')).catch(error => console.log('error', error));
 
         })
         .catch(err => console.error(err));
 
     }
-    sendApi()
+     sendApi()
     let method;
     let type;
 

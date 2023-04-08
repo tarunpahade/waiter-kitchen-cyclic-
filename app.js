@@ -616,6 +616,18 @@ const feedback = mongoose.Schema({
     name: String,
     rating: String
   }],
+  userReccomendation: String,
+  specificProductFeedback: [{
+    item: String,
+    description: String,
+    date: String,
+    hours: String,
+    minutes: String,
+
+    month: String,
+    year: String
+
+  }]
 })
 var review = mongoose.model('rating', feedback, 'feedback');
 app.post('/feedback', (req, res) => {
@@ -624,11 +636,24 @@ app.post('/feedback', (req, res) => {
     pp
   } = req.body;
   console.log(pp);
+  const date3 = new Date
+  const month2 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const year = date3.getFullYear();
+  const date = date3.getDate()
+  const minutes = date3.getMinutes()
+  const month = month2[date3.getMonth()];
+  const hours = date3.getHours()
   const data = new review({
     description: pp.description,
     name: pp.name,
     number: pp.number,
     review: pp.rating,
+    specificProductFeedback: pp.specificProductFeedback,
+    date,
+    hours,
+    minutes,
+    month,
+    year,
   })
   data.save(function (err, book) {
     if (err) {
@@ -647,7 +672,7 @@ app.post('/feedback', (req, res) => {
 app.get('/feedback', (req, res) => {
   console.log(req.params);
 
-  res.sendFile(__dirname + '/public/feedback/index.html')
+  res.sendFile(__dirname + '/public/feedback/feedback.html')
 })
 
 app.get('/fbtoken', (req, res) => {
