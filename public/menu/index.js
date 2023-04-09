@@ -6,6 +6,11 @@ document.querySelector('.navbar-fostrap').addEventListener('click', () => {
     document.querySelector('.nav-fostrap').classList.toggle('visible')
 
 })
+document.querySelector('.fa-circle-xmark').addEventListener('click', () => {
+    document.querySelector('.nav-fostrap').classList.toggle('visible')
+
+})
+
 
 document.querySelector('.menu2').addEventListener('click', () => {
     document.querySelector('.containernav2').style.display = 'block'
@@ -65,16 +70,16 @@ async function getinfos() {
         generatecards(food)
 
     })
-    document.querySelector('.fa-magnifying-glass').addEventListener('click', () => {
+    document.querySelector('#searchicon').addEventListener('click', () => {
         document.querySelector('.food').style.display = 'none'
-        document.querySelector('.fa-solid').setAttribute('class', "fa-regular fa-circle-xmark")
+        // document.querySelector('.fa-solid').setAttribute('class', "fa-regular fa-circle-xmark")
 
-        document.querySelector('.fa-circle-xmark').addEventListener('click', () => {
-            document.querySelector('.fa-circle-xmark').setAttribute('class', "fa-solid fa-magnifying-glass")
-            document.querySelector('.food').style.display = 'grid'
-            // lala.style.display = 'none'
-            input.value = ''
-        })
+        // document.querySelector('.fa-circle-xmark').addEventListener('click', () => {
+        //     document.querySelector('.fa-circle-xmark').setAttribute('class', "fa-solid fa-magnifying-glass")
+        //     document.querySelector('.food').style.display = 'grid'
+        //     // lala.style.display = 'none'
+        //     input.value = ''
+        // })
 
     })
 

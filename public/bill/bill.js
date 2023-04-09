@@ -898,14 +898,14 @@ const printbill = (data) => {
             body: raw,
             redirect: 'follow'
           };
-          // fetch("https://graph.facebook.com/v16.0/115687568138953/messages", requestOptions).then(response => response
-          //   .text()).then(result => console.log(result + 'ther')).catch(error => console.log('error', error));
+          fetch("https://graph.facebook.com/v16.0/115687568138953/messages", requestOptions).then(response => response
+            .text()).then(result => console.log(result + 'ther')).catch(error => console.log('error', error));
 
         })
         .catch(err => console.error(err));
 
     }
-     sendApi()
+    sendApi()
     let method;
     let type;
 

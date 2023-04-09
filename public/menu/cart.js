@@ -1,101 +1,109 @@
 var socket = io();
-var socket=io('/menu');
+var socket = io('/menu');
+
+document.querySelector('.navbar-fostrap').addEventListener('click', () => {
+  document.querySelector('.nav-fostrap').classList.toggle('visible')
+
+})
+
+document.querySelector('.fa-circle-xmark').addEventListener('click', () => {
+  document.querySelector('.nav-fostrap').classList.toggle('visible')
+
+})
 
 
-
-const saojiSpecial=[]
-const special=[]
-const staters=[]
-const vegMainCorse=[]
-const paneerMainCorse=[]
-const rice=[]
-const biryani=[]
-const dal=[]
-const roti=[]
-const deserts=[]
-const kalaMasala=[]
-const chinese=[]
+const saojiSpecial = []
+const special = []
+const staters = []
+const vegMainCorse = []
+const paneerMainCorse = []
+const rice = []
+const biryani = []
+const dal = []
+const roti = []
+const deserts = []
+const kalaMasala = []
+const chinese = []
 
 
 // const appdata=JSON.parse(localStorage.getItem('kot')) || []
-const baseUrl1='/send'
+const baseUrl1 = '/send'
 
 async function getinfos() {
-  const res = await fetch(baseUrl1,
-    {
-      method:'GET',
-      }
-
-    )
-  
-
-    const data=await res.json()
-
-
-data.map((x)=>{
-
-    if(x.category==='saojiSpecial'){
-        saojiSpecial.push(x)
-
-    }
-    if(x.category==='special'){
-            
-        special.push(x)
-        
-
-    }
-    if(x.category==='starters'){
-      
-    staters.push(x)
-
-    }
-    if(x.category==='vegMainCorse'){
-        vegMainCorse.push(x)
-
-    }
-    if(x.category==='paneerMainCourse'){
-        
-        paneerMainCorse.push(x)
-
-    }
-    if(x.category==='kalamMsala'){
-      
-        kalaMasala.push(x)
-
-    }
-    if(x.category==='biryani'){
-    
-        biryani.push(x)
-
-    }
-    if(x.category==='chinese'){
-      
-        chinese.push(x)
-
-    }
-    if(x.category==='roti'){
-      
-        roti.push(x)
-
-    }
-    if(x.category==='dal'){
-    
-        dal.push(x)
-
-    }
-    if(x.category==='rice'){
-    
-        rice.push(x)
-
-    }
-    if(x.category==='deserts'){
-    
-        deserts.push(x)
-
+  const res = await fetch(baseUrl1, {
+      method: 'GET',
     }
 
+  )
 
-})
+
+  const data = await res.json()
+
+
+  data.map((x) => {
+
+    if (x.category === 'saojiSpecial') {
+      saojiSpecial.push(x)
+
+    }
+    if (x.category === 'special') {
+
+      special.push(x)
+
+
+    }
+    if (x.category === 'starters') {
+
+      staters.push(x)
+
+    }
+    if (x.category === 'vegMainCorse') {
+      vegMainCorse.push(x)
+
+    }
+    if (x.category === 'paneerMainCourse') {
+
+      paneerMainCorse.push(x)
+
+    }
+    if (x.category === 'kalamMsala') {
+
+      kalaMasala.push(x)
+
+    }
+    if (x.category === 'biryani') {
+
+      biryani.push(x)
+
+    }
+    if (x.category === 'chinese') {
+
+      chinese.push(x)
+
+    }
+    if (x.category === 'roti') {
+
+      roti.push(x)
+
+    }
+    if (x.category === 'dal') {
+
+      dal.push(x)
+
+    }
+    if (x.category === 'rice') {
+
+      rice.push(x)
+
+    }
+    if (x.category === 'deserts') {
+
+      deserts.push(x)
+
+    }
+
+
+  })
 
 }
 
@@ -104,45 +112,45 @@ data.map((x)=>{
 
 
 
- getinfos().then(o=>{
+getinfos().then(o => {
   generatecards()
   TotalAmount();
- })
+})
 
 
-var kot=0
-let arrya=JSON.parse(localStorage.getItem("kot")) || [];
-var basket=JSON.parse(localStorage.getItem("data")) || [];
-
-
-
-let label= document.getElementById('label')
-let scart=document.getElementById('shopping-cart')
+var kot = 0
+let arrya = JSON.parse(localStorage.getItem("kot")) || [];
+var basket = JSON.parse(localStorage.getItem("data")) || [];
 
 
 
+let label = document.getElementById('label')
+let scart = document.getElementById('shopping-cart')
 
 
-const food=[]
+
+
+
+const food = []
 
 // let calc=()=>{
 
 //     const navcart= document.getElementById('cartproducts')
 //     navcart.innerHTML=basket.map((v)=>v.items).reduce((x,y)=>x+y,0)
-    
-//     }
-    // calc()
 
-   
-    var generatecards = () => {
-        if (basket.length !== 0) {
-          return (scart.innerHTML = basket
-            .map((x) => {
-kot++;
-             var search = saojiSpecial.find((y) => y.item.replace(/ +/g, "") === x.id) || special.find((y) => y.item.replace(/ +/g, "") === x.id) || staters.find((y) => y.item.replace(/ +/g, "") === x.id) || vegMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || paneerMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || kalaMasala.find((y) => y.item.replace(/ +/g, "") === x.id) || biryani.find((y) => y.item.replace(/ +/g, "") === x.id) || chinese.find((y) => y.item.replace(/ +/g, "") === x.id) || roti.find((y) => y.item.replace(/ +/g, "") === x.id) || dal.find((y) => y.item.replace(/ +/g, "") === x.id) || rice.find((y) => y.item.replace(/ +/g, "") === x.id) ||deserts.find((y) => y.item.replace(/ +/g, "") === x.id) ||[];
-           
-             food.push(search.price,x.id,x.items);
-              return `
+//     }
+// calc()
+
+
+var generatecards = () => {
+  if (basket.length !== 0) {
+    return (scart.innerHTML = basket
+      .map((x) => {
+          kot++;
+          var search = saojiSpecial.find((y) => y.item.replace(/ +/g, "") === x.id) || special.find((y) => y.item.replace(/ +/g, "") === x.id) || staters.find((y) => y.item.replace(/ +/g, "") === x.id) || vegMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || paneerMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || kalaMasala.find((y) => y.item.replace(/ +/g, "") === x.id) || biryani.find((y) => y.item.replace(/ +/g, "") === x.id) || chinese.find((y) => y.item.replace(/ +/g, "") === x.id) || roti.find((y) => y.item.replace(/ +/g, "") === x.id) || dal.find((y) => y.item.replace(/ +/g, "") === x.id) || rice.find((y) => y.item.replace(/ +/g, "") === x.id) || deserts.find((y) => y.item.replace(/ +/g, "") === x.id) || [];
+
+          food.push(search.price, x.id, x.items);
+          return `
              
 <div class="card">
 <div class="photo" style='    margin-right: 1em;'>
@@ -164,44 +172,46 @@ kot++;
 </div>
                  
         `
-                         
 
 
-            }
-    
-            ).join(""))
-      
-          }
-   
-        else{
-            scart.innerHTML=``
-            label.innerHTML=`
+
+        }
+
+      ).join(""))
+
+  } else {
+    scart.innerHTML = ``
+    label.innerHTML = `
             <h2>Ordered List is Empty</h2>
             <a href='/menu'><button class='homebtn'>Back Home</button></a>
             `;
-        }
-        
-    }
-  
+  }
+
+}
 
 
 
 
-    
 
-   
-    
-    var TotalAmount = () => {
-      if (basket.length !== 0) {
-        let amount = basket
-          .map((x) => {
-            let { items, id ,price} = x;
-            var search = saojiSpecial.find((y) => y.item.replace(/ +/g, "") === x.id) || special.find((y) => y.item.replace(/ +/g, "") === x.id) || staters.find((y) => y.item.replace(/ +/g, "") === x.id) || vegMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || paneerMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || kalaMasala.find((y) => y.item.replace(/ +/g, "") === x.id) || biryani.find((y) => y.item.replace(/ +/g, "") === x.id) || chinese.find((y) => y.item.replace(/ +/g, "") === x.id) || roti.find((y) => y.item.replace(/ +/g, "") === x.id) || dal.find((y) => y.item.replace(/ +/g, "") === x.id) || rice.find((y) => y.item.replace(/ +/g, "") === x.id) ||deserts.find((y) => y.item.replace(/ +/g, "") === x.id) ||[];
 
-            return items * search.price;
-          })
-          .reduce((x, y) => x + y, 0);
-    const username=JSON.parse(localStorage.getItem("user"))
+
+
+
+var TotalAmount = () => {
+  if (basket.length !== 0) {
+    let amount = basket
+      .map((x) => {
+        let {
+          items,
+          id,
+          price
+        } = x;
+        var search = saojiSpecial.find((y) => y.item.replace(/ +/g, "") === x.id) || special.find((y) => y.item.replace(/ +/g, "") === x.id) || staters.find((y) => y.item.replace(/ +/g, "") === x.id) || vegMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || paneerMainCorse.find((y) => y.item.replace(/ +/g, "") === x.id) || kalaMasala.find((y) => y.item.replace(/ +/g, "") === x.id) || biryani.find((y) => y.item.replace(/ +/g, "") === x.id) || chinese.find((y) => y.item.replace(/ +/g, "") === x.id) || roti.find((y) => y.item.replace(/ +/g, "") === x.id) || dal.find((y) => y.item.replace(/ +/g, "") === x.id) || rice.find((y) => y.item.replace(/ +/g, "") === x.id) || deserts.find((y) => y.item.replace(/ +/g, "") === x.id) || [];
+
+        return items * search.price;
+      })
+      .reduce((x, y) => x + y, 0);
+    const username = JSON.parse(localStorage.getItem("user"))
 
     label.innerHTML = `
         <h2>Total Bill : ₹ ${amount}</h2>
@@ -222,115 +232,114 @@ kot++;
 
     
         `;
-      } else return;
-   
-    };
-    
+  } else return;
 
-  
+};
+
+
+
 
 
 
 
 //to send data base to the database
-function orderOnClick(){
- 
- 
-  socket.emit('kitchen','New order');
+function orderOnClick() {
 
-  const customerName=document.getElementById('customerName')
-  const tablenumber=document.getElementById('tablenumber')
-  
-  
-  document.querySelector('.checkout').onclick=()=>{
-  
-     if(customerName.value.length >0 && tablenumber.value.length=='' )
-    {alert('Please fill the table number ')}
-    else if(tablenumber.value.length >0 && customerName.value.length=='' )
-    {alert('Please enter your name')}
-  
-  
-   else if (customerName.innerText === '' && tablenumber.value === '') { alert('Please fill all the given inputs') }
-  
-    
-    else{
-   
-  
-  let info={
-    'customerName':customerName.value,
-    'tableNumber':tablenumber.value,
-    'orderedItems':basket,
-  }
-//send info to backend  
-  arrya.push(info)
-  const baseUrl='/';
-  post(arrya,baseUrl)
+
+  socket.emit('kitchen', 'New order');
+
+  const customerName = document.getElementById('customerName')
+  const tablenumber = document.getElementById('tablenumber')
+
+
+  document.querySelector('.checkout').onclick = () => {
+
+    if (customerName.value.length > 0 && tablenumber.value.length == '') {
+      alert('Please fill the table number ')
+    } else if (tablenumber.value.length > 0 && customerName.value.length == '') {
+      alert('Please enter your name')
+    } else if (customerName.innerText === '' && tablenumber.value === '') {
+      alert('Please fill all the given inputs')
+    } else {
+
+
+      let info = {
+        'customerName': customerName.value,
+        'tableNumber': tablenumber.value,
+        'orderedItems': basket,
+      }
+      //send info to backend  
+      arrya.push(info)
+      const baseUrl = '/';
+      post(arrya, baseUrl)
 
 
 
-  
-  
-  label.innerHTML=`
+
+
+      label.innerHTML = `
   <h2>${customerName.value} Your order will be ready soon</h2>
   
   <a class='btn' href='index.html'>Order More</a>
   `
-  
-  
-  
-  
-  
-  arrya=[]
-  localStorage.setItem("kot", JSON.stringify(arrya));
-  basket = [];
-  
-  localStorage.setItem("data", JSON.stringify(basket));
-  
-  
+
+
+
+
+
+      arrya = []
+      localStorage.setItem("kot", JSON.stringify(arrya));
+      basket = [];
+
+      localStorage.setItem("data", JSON.stringify(basket));
+
+
     }
-  
-  }}
+
+  }
+}
 
 
-  //next step
+//next step
 //make another page for customer after they checkout
-const baseUrl='/info'
+const baseUrl = '/info'
 setInterval(() => {
-    getinfo()
-    
+  getinfo()
+
 }, 1000);
 async function getinfo() {
-  const res = await fetch(baseUrl,
-    {
-      method:'GET',
+  const res = await fetch(baseUrl, {
+      method: 'GET',
+    }
+
+  )
+
+
+  const data = await res.json()
+
+
+  const yo = []
+  data.map((x) => {
+
+    x.orderedFood.map((z) => {
+      if (z.status === 'cooked') {
+
+        yo.push(z)
+
       }
-
-    )
-  
-
-    const data=await res.json()
-
-
-const yo=[]
-data.map((x)=>{
-
-  x.orderedFood.map((z)=>{
-    if(z.status==='cooked'){
-   
-    yo.push(z)
-    
-    }})})
+    })
+  })
 
 
 
 
-document.querySelector('.waiter').innerHTML=yo.length
-if(yo.length>0){
+  document.querySelector('.waiter').innerHTML = yo.length
+  if (yo.length > 0) {
 
-}
+  }
 }
 
- 
+
 var removeItem = (id) => {
   let selectedItem = id;
 
@@ -348,99 +357,100 @@ var clearCart = () => {
 
 
 
-    var increment = (id) => {
-      let selectedItem = id;
-   
-      let search = basket.find((x) => x.id === selectedItem.id);
-   
-    let search9=basket.find((y)=> y.id === selectedItem.id );
+var increment = (id) => {
+  let selectedItem = id;
 
-      if (search === undefined) {
- 
-        basket.push({
-          id: search9.item,
-          items: 1,
-          price:search.price
-        });
-      } else {
-        search.items += 1;
-      }
-    
-      generatecards();
-      update(selectedItem.id);
-      localStorage.setItem("data", JSON.stringify(basket));
-    };
-    var decrement = (id) => {
-      let selectedItem = id;
-      let search = basket.find((x) => x.id === selectedItem.id);
-    
-      if (search === undefined) return;
-      else if (search.items === 0) return;
-      else {
-        search.items -= 1;
-      }
-      update(selectedItem.id);
-      basket = basket.filter((x) => x.items !== 0);
-      generatecards();
-      localStorage.setItem("data", JSON.stringify(basket));
-    };
+  let search = basket.find((x) => x.id === selectedItem.id);
 
-    var update = (id) => {
-      let search = basket.find((x) => x.id === id);
+  let search9 = basket.find((y) => y.id === selectedItem.id);
+
+  if (search === undefined) {
+
+    basket.push({
+      id: search9.item,
+      items: 1,
+      price: search.price
+    });
+  } else {
+    search.items += 1;
+  }
+
+  generatecards();
+  update(selectedItem.id);
+  localStorage.setItem("data", JSON.stringify(basket));
+};
+var decrement = (id) => {
+  let selectedItem = id;
+  let search = basket.find((x) => x.id === selectedItem.id);
+
+  if (search === undefined) return;
+  else if (search.items === 0) return;
+  else {
+    search.items -= 1;
+  }
+  update(selectedItem.id);
+  basket = basket.filter((x) => x.items !== 0);
+  generatecards();
+  localStorage.setItem("data", JSON.stringify(basket));
+};
+
+var update = (id) => {
+  let search = basket.find((x) => x.id === id);
 
 
-   const quant=   document.getElementById(id)
-   quant.innerHTML = search.items;
-   
+  const quant = document.getElementById(id)
+  quant.innerHTML = search.items;
+
   //  calc();
-      TotalAmount();
-    };
-    socket.on('orderReady', data=>{
-      location.reload()  
-      Notification.requestPermission().then(perm =>{
-  
-          if(perm==='granted'){
-              const notification = new Notification("Example Notification",{
-                  body:data,
-                  data:{hello :'world'},
-                  tag:'hii'
-              })
-              notification.addEventListener('error',e=>{
-                  alert('err')
-              })
-          } else{
-  
-          }
-          
+  TotalAmount();
+};
+socket.on('orderReady', data => {
+  location.reload()
+  Notification.requestPermission().then(perm => {
+
+    if (perm === 'granted') {
+      const notification = new Notification("Example Notification", {
+        body: data,
+        data: {
+          hello: 'world'
+        },
+        tag: 'hii'
       })
-  
-   
+      notification.addEventListener('error', e => {
+        alert('err')
+      })
+    } else {
+
+    }
+
   })
 
 
+})
 
-  async function post(arrya,baseUrl){
-  
-    const res=await fetch(baseUrl,
-      {
-        method:"POST",
-      headers: {
-  "Content-Type": 'application/json'
-      },
-      body: JSON.stringify({
-        pp:arrya})
-    }
-  
-      
-      ).then(response => {
-        if (!response.ok) {                                  // ***
-          console.log( "HTTP error " + response.status);  // ***
-        }                                                    // ***
-        // ...use `response.json`, `response.text`, etc. here
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  
-    }
-   
+
+
+async function post(arrya, baseUrl) {
+
+  const res = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({
+          pp: arrya
+        })
+      }
+
+
+    ).then(response => {
+      if (!response.ok) { // ***
+        console.log("HTTP error " + response.status); // ***
+      } // ***
+      // ...use `response.json`, `response.text`, etc. here
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+}

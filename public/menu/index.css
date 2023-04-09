@@ -154,7 +154,7 @@ body{
 overflow-x: hidden;
 
    margin: 0%;
-   background-color: #B3E6BA;
+
    padding: 0;
    margin: 0;
 }
@@ -234,10 +234,7 @@ h4{
 }
 
 
-.itemnav:hover{
-    background-color: #e78c14;
-    color: #fef5df;
-}
+
 
 .lala{
     display: grid;
@@ -322,3 +319,92 @@ span{
     border-radius: 15px;
 }
 
+.toolbar {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    left: 0;
+}
+.footer-button {
+    height: 92px;
+   
+    padding: 15px 30px !important;
+    right: 0;
+    left: 0;
+}
+
+.button.button-large {
+    font-size: 16px;
+    padding: 20px 30px;
+    height: auto;
+    line-height: 1.3;
+ background: #4a3749;
+    border-radius: 22px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.button {
+   
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    margin: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+    cursor: pointer;
+    outline: 0;
+    box-sizing: border-box;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+ 
+}
+#searchicon{
+    left: 42px;
+    margin: 0;
+    top: 71px;
+    position: absolute;
+
+}
+.cart{
+    height: 60px;
+    min-width: 60px;
+    background-color: #ebebeb;
+    border-radius: 22px;
+    text-align: center;
+    display: block;
+    margin-left: 12px;
+    padding-top: 15px;
+}
+#back{
+    position: fixed;
+    top: 12;
+    left: 20;
+    z-index: 5;
+}
+.fa-circle-xmark{
+    font-weight: 400;
+    color: black;
+    display: block;
+    color: #000;
+    font-size: 1em;
+    position: absolute;
+    right: 25px;
+    top: 32px;
+
+}
+.title{
+    font-size: 1.5rem;
+    padding-left: 5px;
+    font-weight: 500;
+    line-height: 1.3;
+}

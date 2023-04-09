@@ -51,15 +51,17 @@ width: 50%;
     align-content: center;
 }
 span{
-    padding-top: 8px;
-    color: #545151
+    padding: 0 10;    color: #545151
 }
 
 #label{
     text-align: center;
     margin-bottom: 20px;
-   color: rgb(56 126 102);
+   color: rgb(128 156 146);
     font-family: 'Poppins', sans-serif;
+}
+.title{
+    margin: 1em;
 }
 .homebtn{
     background-color: #212529;
