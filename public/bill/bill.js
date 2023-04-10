@@ -509,6 +509,10 @@ async function getinfo() {
           document.querySelector('#table' + j[0].table).classList.remove('bookedTable')
 
         })
+        const printOrder = document.createElement('button')
+        printOrder.addEventListener('click', () => {
+          printJS(j, 'html')
+        })
 
 
         remove.innerText = 'Remove'
@@ -535,7 +539,7 @@ async function getinfo() {
 
         })
 
-        buttondiv.append(print, remove, kota)
+        buttondiv.append(print, remove, kota, printOrder)
         bill.append(buttondiv)
 
 

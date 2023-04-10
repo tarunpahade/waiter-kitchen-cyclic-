@@ -1,7 +1,6 @@
 var socket = io('/menu');
 var socket = io();
 
-
 document.querySelector('.navbar-fostrap').addEventListener('click', () => {
     document.querySelector('.nav-fostrap').classList.toggle('visible')
 
@@ -17,7 +16,7 @@ document.querySelector('.menu2').addEventListener('click', () => {
 })
 
 document.querySelector('.menu2').style.display = 'none'
-
+document.querySelector('.view-order').style.display = 'none'
 const saojiSpecial = []
 const special = []
 const staters = []
@@ -228,7 +227,7 @@ document.querySelectorAll('.itemnav').forEach(item => {
 
 document.querySelectorAll('.container').forEach(item => {
     item.onclick = function corn() {
-
+        calc()
         if (item.dataset.item === 'saojiSpecial') {
 
             generatecards(saojiSpecial)
@@ -293,7 +292,8 @@ document.querySelectorAll('.container').forEach(item => {
         document.querySelector('.food').style.display = 'none'
 
         document.querySelector('nav').classList.add('nav')
-        document.querySelector('.menu2').style.display = 'block'
+        document.querySelector('.menu2').style.display = 'flex'
+        document.querySelector('.view-order').style.display = 'flex'
         document.querySelector('.topic').innerHTML = item.firstChild.nextSibling.lastChild.previousElementSibling.firstElementChild.innerText
 
 
@@ -310,7 +310,7 @@ document.querySelector('.menu2').addEventListener('click', () => {
 document.querySelector('.cross').addEventListener('click', () => {
 
     document.querySelector('.containernav2').style.display = 'none'
-    document.querySelector('.menu2').style.display = 'block'
+    document.querySelector('.menu2').style.display = 'flex'
     document.querySelector('.cross').style.display = 'none'
 })
 
@@ -412,7 +412,13 @@ let update = (id) => {
 let calc = () => {
 
     const navcart = document.getElementById('cartproducts')
-    navcart.innerHTML = basket.map((v) => v.items).reduce((x, y) => x + y, 0)
+    console.log(basket)
+    const price = []
+    basket.map((c) => {
+        price.push(c.price)
+    })
+    document.querySelector('#total').innerHTML = '₹' + price.reduce((x, y) => x + y, 0)
+    navcart.innerHTML = basket.map((v) => v.items).reduce((x, y) => x + y, 0) + ' total'
 }
 
 // calc()
