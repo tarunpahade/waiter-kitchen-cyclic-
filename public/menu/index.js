@@ -1,5 +1,7 @@
 var socket = io('/menu');
 var socket = io();
+let basket = JSON.parse(localStorage.getItem("data")) || []
+
 
 document.querySelector('.navbar-fostrap').addEventListener('click', () => {
     document.querySelector('.nav-fostrap').classList.toggle('visible')
@@ -227,7 +229,6 @@ document.querySelectorAll('.itemnav').forEach(item => {
 
 document.querySelectorAll('.container').forEach(item => {
     item.onclick = function corn() {
-        calc()
         if (item.dataset.item === 'saojiSpecial') {
 
             generatecards(saojiSpecial)
@@ -351,7 +352,6 @@ let generatecards = (food) => {
     }).join('')
 
 }
-let basket = JSON.parse(localStorage.getItem("data")) || []
 console.log(basket)
 
 let increment = (id) => {
@@ -485,3 +485,67 @@ socket.on('notificationToClient', (data) => { //received message
     console.log(data);
     alert(data)
 })
+
+function orderOnClick() {
+    let arrya = JSON.parse(localStorage.getItem("kot")) || [];
+    var basket = JSON.parse(localStorage.getItem("data")) || [];
+
+    socket.emit('kitchen', 'New order');
+
+
+
+
+    let table = JSON.parse(localStorage.getItem("table")) || []
+    let employee = JSON.parse(localStorage.getItem("user")) || []
+    console.log(employee);
+    let info = {
+        'customerName': employee.username,
+        'tableNumber': table,
+        'orderedItems': basket,
+    }
+    //send info to backend  
+    arrya.push(info)
+    const baseUrl = '/';
+    console.log(arrya);
+    post(arrya, baseUrl)
+
+
+
+    location.reload()
+
+
+
+    arrya = []
+    localStorage.setItem("kot", JSON.stringify(arrya));
+    basket = [];
+
+    localStorage.setItem("data", JSON.stringify(basket));
+
+
+
+
+}
+async function post(arrya, baseUrl) {
+
+    const res = await fetch(baseUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify({
+                    pp: arrya
+                })
+            }
+
+
+        ).then(response => {
+            if (!response.ok) { // ***
+                console.log("HTTP error " + response.status); // ***
+            } // ***
+            // ...use `response.json`, `response.text`, etc. here
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+}

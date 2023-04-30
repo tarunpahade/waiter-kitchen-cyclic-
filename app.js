@@ -111,7 +111,6 @@ app.get('/', (req, res) => {
 
 //from menu to database
 app.post('/', async (req, res) => {
-
   const date = new Date();
   const d = new Date();
   const month2 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -127,6 +126,7 @@ app.post('/', async (req, res) => {
   const {
     pp
   } = req.body;
+  console.log(pp);
 
   const name = pp[0].customerName
   const table = pp[0].tableNumber
@@ -523,7 +523,7 @@ app.post('/delete', (req, res) => {
     pp
   } = req.body
 
-  order.deleteOne({
+  order.findByIdAndDelete({
     _id: pp._id
   }).then((err, book) => {
     if (err) {
@@ -588,7 +588,7 @@ app.post('/login', async (req, res) => {
         usersinfo.push(user)
         console.log(usersinfo);
         if (usersinfo[0].position === 'Waiter') {
-          res.redirect('/menu')
+          res.redirect('/bill/bill.html')
 
         } else if (usersinfo[0].position === 'Chef')
           res.redirect('/kitchen2')

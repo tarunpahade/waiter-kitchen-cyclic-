@@ -20,7 +20,10 @@ const p = document.querySelector('.haha')
 const hoho = []
 const tables = ['6', '5', '7', '8', '1', '2', '3', '4', '9']
 // const appdata=JSON.parse(localStorage.getItem('kot')) || []
+document.querySelector('.fa-circle-xmark').addEventListener('click', () => {
+  document.querySelector('.nav-fostrap').classList.toggle('visible')
 
+})
 
 
 
@@ -31,7 +34,7 @@ function none() {
 
 
 
-
+const lala = []
 
 const baseUrl = '/info'
 
@@ -45,6 +48,7 @@ async function getinfo() {
 
   const data = await res.json()
   console.log(data);
+  lala.push(data)
   data.map((x) => {
 
 
@@ -306,15 +310,15 @@ async function getinfo() {
 
 
   // Checked the matched table numbers between two arrays tables and data and add into the result array
-
+  console.log(hoho);
   let ret = tables.filter(val => hoho.includes(val));
   //shows booked tables
   const bookedTables = []
-
+  //adding blue color to selected tables
   ret.map((y) => {
 
 
-
+    console.log(y);
     //setting background color of the reserved div
     const selectedTables = document.querySelector('#table' + y.toString())
     selectedTables.classList.add('bookedTable')
@@ -329,223 +333,17 @@ async function getinfo() {
     //generating bill templete in div on left corner
     selectedTables.addEventListener('click', () => {
 
+      console.log(j);
+
       //bill gemeration
+      //    window.location = './table.html'
 
-
-      //right-container  inner html
-      const bill = document.querySelector('.generateBill')
-      bill.style.display = 'flex'
-      bill.innerHTML = ` <div class='flexoid'><i id='cross' class="fa-regular fa-circle-xmark" onclick='none()'></i></div>`
-
-      function orders() {
-        var gridContainer = document.createElement('table')
-        gridContainer.classList.add('table')
-        gridContainer.classList.add('text-black')
-
-        //item
-        const item = document.createElement('th')
-        item.classList.add('grid-item')
-        item.innerText = 'Item'
-        //quantity
-        const quantity = document.createElement('th')
-        quantity.classList.add('grid-item')
-        quantity.innerText = 'Quantity'
-        //rate
-        const rate = document.createElement('th')
-        rate.classList.add('grid-item')
-        rate.innerText = 'Amount'
-        //amount
-
-
-        const header = document.createElement('thead')
-        header.append(item, quantity, rate)
-        gridContainer.append(header)
-
-
-        const theadaa = document.createElement('tbody')
-
-        const salesToday = []
-        j.map((x) => {
-          const saleForToday = []
-          x.orderedFood.map((y) => {
-
-            saleForToday.push(y.price * y.items);
-
-            const tr = document.createElement('tr')
-            //item
-            const item = document.createElement('td')
-            item.classList.add('grid-item')
-            item.innerText = y.id.replace(/([A-Z])/g, ' $1').trim()
-            //quantity
-            const quantity = document.createElement('td')
-            quantity.classList.add('grid-item')
-            quantity.innerText = y.items
-            //rate
-            const rate = document.createElement('td')
-            rate.classList.add('grid-item')
-            rate.innerText = y.price
-            //amount
-            tr.append(item, quantity, rate)
-            theadaa.append(tr)
-
-
-          })
-          const add = saleForToday.reduce(function (acc, val) {
-            return acc + val;
-          }, 0)
-          console.log(add);
-          salesToday.push(add)
-
-        })
+      // bill.innerHTML = ` <div class='flexoid'><i id='cross' class="fa-regular fa-circle-xmark" onclick='none()'></i></div>`
 
 
 
-        gridContainer.append(theadaa)
-        gridContainer.style.display = 'none'
-        const customerName = document.createElement('input')
-        customerName.setAttribute('placeholder', 'customer name')
-        customerName.setAttribute('id', 'customerName')
-        const number = document.createElement('input')
-        number.setAttribute('placeholder', 'Phone Number')
-        number.setAttribute('id', 'PhoneNumber')
-        const inputs = document.createElement('div')
-        //inputs.append(customerName, number)
-        inputs.innerHTML = `
-<div class="form-group">
-											<label class="font-w600">Customer Info</label>
-											<input type="text" class="form-control solid"  id="customerName" placeholder="Enter Full Name">
-										</div>
-                    
-                    <div class="form-group">
-											<input type="text" class="form-control solid" id="PhoneNumber" placeholder="Enter Phone Number">
-										</div>
-                  
+      // orders(j)
 
-                    
-                    <div class="form-group" style='display:flex'>
-											<input type="text" class="form-control solid" id="discount" placeholder="Enter discount" style='width:60%'>
-                      <select style='width:50' id='percent'><option id='₹'>₹</option> <option id='%'>%</option></select>
-										</div>
-                
-
-`
-        const amt = document.createElement('div')
-        console.log(salesToday);
-        amt.setAttribute('class', 'total')
-        amt.innerHTML = `<h4 class="mb-4">Amount to Pay ₹<strong>   ${salesToday}</strong></h4>`
-        const button = document.createElement("a")
-        button.style.color = 'black'
-        button.setAttribute('class', 'limk')
-        button.addEventListener('click', () => {
-          document.querySelector('.table').style.display = 'block'
-          document.querySelector('.limk').style.display = 'none'
-          document.querySelector('.total').style.display = 'none'
-
-        })
-        button.innerHTML = 'View orders'
-
-        bill.append(gridContainer, amt, button, inputs)
-        const payment = document.createElement('div')
-
-        payment.innerHTML = `
-        <div class='flex'>
-        <div class="form-group mb-4 pb-2">
-<label class="font-w600">Select Payment Method</label>
-<div class="row no-gutters align-items-center">
-  <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-    <div class="custom-control custom-radio">
-      <input checked="" type="radio" id="cash" name="option" class="custom-control-input">
-      <label class="custom-control-label" for="cash"><span class="ms-2">Cash</span></label>
-    </div>
-  </div>
-  <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-    <div class="custom-control custom-radio">
-      <input type="radio" id="card" name="option" class="custom-control-input">
-      <label class="custom-control-label" for="card"><span class="ms-2">Card</span></label>
-    </div>
-  </div>
-</div>
-</div>
-<div class="form-group mb-4 pb-2">
-<label class="font-w600">Order type</label>
-<div class="row no-gutters align-items-center">
-
-  <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-    <div class="custom-control custom-radio">
-      <input type="radio" id="dine-in" name="option2" class="custom-control-input">
-      <label class="custom-control-label" for="dine-in"><span class="ms-2">Dine-in</span></label>
-    </div>
-  </div>
-  <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-    <div class="custom-control custom-radio">
-      <input checked="" type="radio" id="takeaway" name="option2" class="custom-control-input">
-      <label class="custom-control-label" for="takeaway"><span class="ms-2">Takeaway</span></label>
-    </div>
-  </div>
-  <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-    <div class="select_box style-1 w-100 d-flex">
-    
-  </div>
-</div>
-</div>
-</div>
-
-`
-        const order = document.createElement('div')
-        order.innerHTML = ``
-        bill.append(payment)
-        const buttondiv = document.createElement('div')
-        buttondiv.classList.add('buttondiv')
-        const print = document.createElement('button')
-
-        print.innerHTML = `
-<i class="fa-brands  fa-whatsapp " id='sms'></i>`
-        const remove = document.createElement('button')
-        print.addEventListener('click', () => {
-          printbill(j)
-          document.querySelector('.haha').style.display = 'block'
-
-          // document.querySelector('.haha').style.display='none'
-          document.querySelector('#table' + j[0].table).classList.remove('bookedTable')
-
-        })
-        const printOrder = document.createElement('button')
-        printOrder.addEventListener('click', () => {
-          printJS(j, 'html')
-        })
-
-
-        remove.innerText = 'Remove'
-        remove.addEventListener('click', (e) => {
-          j.map((Q) => {
-            document.querySelector('#table' + j[0].table).classList.remove('bookedTable')
-            document.querySelector('.generateBill').style.display = 'none'
-
-            let search9 = j.find((O) => O.kot === Q.kot);
-
-
-
-            //send info to backend
-            post(search9, '/delete')
-          })
-        })
-        const kota = document.createElement('button')
-        kota.innerHTML = `
-<i class="fa-regular sms fa-message" id='sms'></i>`
-        kota.addEventListener('click', (e) => {
-          document.querySelector('.generateBill').style.display = 'none'
-          number.innerHTML
-          post(number.innerHTML, '/sms')
-
-        })
-
-        buttondiv.append(print, remove, kota, printOrder)
-        bill.append(buttondiv)
-
-
-      }
-
-      orders()
 
 
     })
@@ -556,10 +354,246 @@ async function getinfo() {
 
 
 
-
   })
 
 }
+
+function tab(id) {
+  console.log(id.slice(5));
+  localStorage.setItem("table", JSON.stringify(id.slice(5)));
+
+  let search9 = lala[0].find((O) => O.table === id.slice(5));
+
+  if (search9 === undefined) {
+    console.log('no');
+    const noOrder = {
+      'orders': 'no previous orders'
+    }
+    localStorage.setItem("previousOrders", JSON.stringify(noOrder));
+
+  } else {
+    console.log(search9);
+    localStorage.setItem("previousOrders", JSON.stringify(search9));
+
+  }
+  window.location = './table.html'
+
+}
+
+function orders(j) {
+
+
+  var gridContainer = document.createElement('table')
+  gridContainer.classList.add('table')
+  gridContainer.classList.add('text-black')
+
+  //item
+  const item = document.createElement('th')
+  item.classList.add('grid-item')
+  item.innerText = 'Item'
+  //quantity
+  const quantity = document.createElement('th')
+  quantity.classList.add('grid-item')
+  quantity.innerText = 'Quantity'
+  //rate
+  const rate = document.createElement('th')
+  rate.classList.add('grid-item')
+  rate.innerText = 'Amount'
+  //amount
+
+
+  const header = document.createElement('thead')
+  header.append(item, quantity, rate)
+  gridContainer.append(header)
+
+
+  const theadaa = document.createElement('tbody')
+
+  const salesToday = []
+  j.map((x) => {
+    const saleForToday = []
+    x.orderedFood.map((y) => {
+
+      saleForToday.push(y.price * y.items);
+
+      const tr = document.createElement('tr')
+      //item
+      const item = document.createElement('td')
+      item.classList.add('grid-item')
+      item.innerText = y.id.replace(/([A-Z])/g, ' $1').trim()
+      //quantity
+      const quantity = document.createElement('td')
+      quantity.classList.add('grid-item')
+      quantity.innerText = y.items
+      //rate
+      const rate = document.createElement('td')
+      rate.classList.add('grid-item')
+      rate.innerText = y.price
+      //amount
+      tr.append(item, quantity, rate)
+      theadaa.append(tr)
+
+
+    })
+    const add = saleForToday.reduce(function (acc, val) {
+      return acc + val;
+    }, 0)
+    console.log(add);
+    salesToday.push(add)
+
+  })
+
+
+
+  gridContainer.append(theadaa)
+  //Done making bill
+
+  gridContainer.style.display = 'none'
+  const customerName = document.createElement('input')
+  customerName.setAttribute('placeholder', 'customer name')
+  customerName.setAttribute('id', 'customerName')
+  const number = document.createElement('input')
+  number.setAttribute('placeholder', 'Phone Number')
+  number.setAttribute('id', 'PhoneNumber')
+  const inputs = document.createElement('div')
+  //inputs.append(customerName, number)
+  inputs.innerHTML = `
+<div class="form-group">
+                <label class="font-w600">Customer Info</label>
+                <input type="text" class="form-control solid"  id="customerName" placeholder="Enter Full Name">
+              </div>
+              
+              <div class="form-group">
+                <input type="text" class="form-control solid" id="PhoneNumber" placeholder="Enter Phone Number">
+              </div>
+            
+
+              
+              <div class="form-group" style='display:flex'>
+                <input type="text" class="form-control solid" id="discount" placeholder="Enter discount" style='width:60%'>
+                <select style='width:50' id='percent'><option id='₹'>₹</option> <option id='%'>%</option></select>
+              </div>
+          
+
+`
+  const amt = document.createElement('div')
+  console.log(salesToday);
+  amt.setAttribute('class', 'total')
+  amt.innerHTML = `<h4 class="mb-4">Amount to Pay ₹<strong>   ${salesToday}</strong></h4>`
+  const button = document.createElement("a")
+  button.style.color = 'black'
+  button.setAttribute('class', 'limk')
+  button.addEventListener('click', () => {
+    document.querySelector('.table').style.display = 'block'
+    document.querySelector('.limk').style.display = 'none'
+    document.querySelector('.total').style.display = 'none'
+
+  })
+  button.innerHTML = 'View orders'
+
+  bill.append(gridContainer, amt, button, inputs)
+  const payment = document.createElement('div')
+
+  payment.innerHTML = `
+  <div class='flex'>
+  <div class="form-group mb-4 pb-2">
+<label class="font-w600">Select Payment Method</label>
+<div class="row no-gutters align-items-center">
+<div class="col-6 col-sm-6 col-md-6 col-lg-4">
+<div class="custom-control custom-radio">
+<input checked="" type="radio" id="cash" name="option" class="custom-control-input">
+<label class="custom-control-label" for="cash"><span class="ms-2">Cash</span></label>
+</div>
+</div>
+<div class="col-6 col-sm-6 col-md-6 col-lg-4">
+<div class="custom-control custom-radio">
+<input type="radio" id="card" name="option" class="custom-control-input">
+<label class="custom-control-label" for="card"><span class="ms-2">Card</span></label>
+</div>
+</div>
+</div>
+</div>
+<div class="form-group mb-4 pb-2">
+<label class="font-w600">Order type</label>
+<div class="row no-gutters align-items-center">
+
+<div class="col-6 col-sm-6 col-md-6 col-lg-4">
+<div class="custom-control custom-radio">
+<input type="radio" id="dine-in" name="option2" class="custom-control-input">
+<label class="custom-control-label" for="dine-in"><span class="ms-2">Dine-in</span></label>
+</div>
+</div>
+<div class="col-6 col-sm-6 col-md-6 col-lg-4">
+<div class="custom-control custom-radio">
+<input checked="" type="radio" id="takeaway" name="option2" class="custom-control-input">
+<label class="custom-control-label" for="takeaway"><span class="ms-2">Takeaway</span></label>
+</div>
+</div>
+<div class="col-12 col-sm-12 col-md-6 col-lg-4">
+<div class="select_box style-1 w-100 d-flex">
+
+</div>
+</div>
+</div>
+</div>
+
+`
+  const order = document.createElement('div')
+  order.innerHTML = ``
+  bill.append(payment)
+  const buttondiv = document.createElement('div')
+  buttondiv.classList.add('buttondiv')
+  const print = document.createElement('button')
+
+  print.innerHTML = `
+<i class="fa-brands  fa-whatsapp " id='sms'></i>`
+  const remove = document.createElement('button')
+  print.addEventListener('click', () => {
+    printbill(j)
+    document.querySelector('.haha').style.display = 'block'
+
+    // document.querySelector('.haha').style.display='none'
+    document.querySelector('#table' + j[0].table).classList.remove('bookedTable')
+
+  })
+  const printOrder = document.createElement('button')
+  printOrder.innerHTML = 'Print'
+  printOrder.addEventListener('click', () => {
+    printJS(j, 'html')
+  })
+
+
+  remove.innerText = 'Remove'
+  remove.addEventListener('click', (e) => {
+    j.map((Q) => {
+      document.querySelector('#table' + j[0].table).classList.remove('bookedTable')
+      document.querySelector('.generateBill').style.display = 'none'
+
+      let search9 = j.find((O) => O.kot === Q.kot);
+
+
+
+      //send info to backend
+      post(search9, '/delete')
+    })
+  })
+  const kota = document.createElement('button')
+  kota.innerHTML = `
+<i class="fa-regular sms fa-message" id='sms'></i>`
+  kota.addEventListener('click', (e) => {
+    document.querySelector('.generateBill').style.display = 'none'
+    number.innerHTML
+    post(number.innerHTML, '/sms')
+
+  })
+
+  buttondiv.append(print, remove, kota, printOrder)
+  bill.append(buttondiv)
+
+
+}
+
+
 
 
 const printbill = (data) => {

@@ -164,13 +164,13 @@ nav {
     display: grid;
     grid-template-columns: auto auto auto;
     width: 87%;
-    border: 1px solid black;
+ 
    
 }
 
 .table-click {
     padding: 0.5em 1em;
-    border: solid 1px black;
+  
     margin: 0.5em;
     background: WHITE;
     /* width: 0.1em; */
